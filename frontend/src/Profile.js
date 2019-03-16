@@ -4,6 +4,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import classnames from 'classnames';
 import ProfileAvatar from './ProfileAvatar';
 import TechCard from './TechCard';
+import RepoCard from './RepoCard';
 import icon from './icon.js';
 
 const styles = {
@@ -149,6 +150,29 @@ class Profile extends Component {
           >
             <ExpandMoreIcon />
           </IconButton>
+        </div>
+        <div className={classes.verticalContainer}>
+          <Typography component="h2" variant="h5" gutterBottom>
+            Repos
+          </Typography>
+          <div className={classes.horizontalContainer}>
+            <RepoCard
+              className={classes.techCard}
+              name="Kubernetes"
+            />
+            <RepoCard
+              className={classes.techCard}
+              name="BlahBlah"
+            />
+            <RepoCard
+              className={classes.techCard}
+              name="BlahBlah"
+            />
+            <RepoCard
+              className={classes.techCard}
+              name="BlahBlah"
+            />
+          </div>
         </div>
       </div>
     );
