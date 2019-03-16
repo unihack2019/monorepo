@@ -4,6 +4,7 @@ const cors = require('cors');
 const fetch = require('node-fetch');
 const dotenv = require('dotenv');
 const database = require("./api/firebase");
+const analyse = require("./analyse");
 
 dotenv.config();
 
@@ -26,13 +27,16 @@ app.post('/github/:code', async(req, res) => {
     }
   });
   const userJson = await userResponse.json();
+  const githubId = userJson.id.toString();
 
-  database.collection("applicants").doc(userJson.id.toString()).set({
-    name: userJson.name,
-    email: userJson.email,
-    token: authJson.access_token
+  database.collection("applicants").doc(githubId).set({
+    profile: userJson,
+    technologies: [],
+    repositories: []
   });
-  res.json(userJson.id);
+
+  res.json(githubId);
+  analyse(githubId, authJson.access_token);
 });
 
 app.listen(3001, () => console.log(`Example app listening on port 3001`));
