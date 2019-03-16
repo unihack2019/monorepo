@@ -10,6 +10,7 @@ const styles = {
   card: {
     padding: '20px',
     marginBottom: '20px',
+    cursor: 'pointer !important',
   },
   techList: {
     marginBottom: '10px',

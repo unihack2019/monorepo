@@ -67,6 +67,7 @@ const CandidateItem = withStyles(
     container: {
       display: 'flex',
       padding: theme.spacing.unit * 2,
+      cursor: 'pointer',
     },
     avatar: {
       backgroundColor: '#FFFs',
