@@ -8,6 +8,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "firebase": "^5.9.0",
     "node-fetch": "^2.3.0"
   },
   "devDependencies": {
