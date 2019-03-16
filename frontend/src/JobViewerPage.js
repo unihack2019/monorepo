@@ -3,6 +3,7 @@ import { Typography, withStyles, Card, } from '@material-ui/core';
 import TechnologiesChipList from './TechnologiesChipList';
 import ProfileAvatar from './ProfileAvatar';
 import matchToDisplayName from './matchToDisplayName';
+import { Route } from 'react-router';
 
 // Mmmm slow code :P
 function match() {
@@ -16,6 +17,7 @@ const CandidateItem = withStyles(
       padding: theme.spacing.unit * 2,
     },
     avatar: {
+      backgroundColor: '#FFFs',
     },
     avatarContainer: {
       display: 'flex',
@@ -25,19 +27,19 @@ const CandidateItem = withStyles(
       marginRight: theme.spacing.unit * 2
     },
   }), { withTheme: true })(({ classes, profile }) => (
-  <Card className={classes.container}>
-    <div className={classes.avatarContainer}>
-      <div className={classes.avatar}>
+  <Route render={(route) => (
+    <Card className={classes.container} onClick={() => route.history.push('/profile')}>
+      <div className={classes.avatarContainer}>
         <ProfileAvatar size={64} match={profile.match}/>
+        <Typography variant="subtitle2">{matchToDisplayName(profile.match)}</Typography>
       </div>
-      <Typography variant="subtitle2">{matchToDisplayName(profile.match)}</Typography>
-    </div>
-    <div>
-      <Typography variant="h6" component="h1">{profile.name}</Typography>
-      <TechnologiesChipList technologies={profile.technologies.slice(0, 3)}/>
-      <Typography variant="body1">{profile.bio}</Typography>
-    </div>
-  </Card>
+      <div>
+        <Typography variant="h6" component="h1">{profile.name}</Typography>
+        <TechnologiesChipList technologies={profile.technologies.slice(0, 3)}/>
+        <Typography variant="body1">{profile.bio}</Typography>
+      </div>
+    </Card>
+  )}
 ));
 
 const CandidateList = withStyles(theme => ({

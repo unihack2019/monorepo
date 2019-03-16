@@ -36,11 +36,12 @@ const styles = {
   },
 }
 
-const ProfileAvatar = ({ match, classes, avatar_url="https://avatars0.githubusercontent.com/u/9994172?s=460&v=4" }) => (
+const ProfileAvatar = ({ match, classes, className, avatar_url="https://avatars0.githubusercontent.com/u/9994172?s=460&v=4", ...other }) => (
   <Avatar
     alt="Avatar"
     src={avatar_url}
-    className={classnames(classes[match], classes.container)}
+    className={classnames(className, classes[match], classes.container)}
+    {...other}
   />
 );
 const StyledProfileAvatar = withStyles(styles)(ProfileAvatar);
