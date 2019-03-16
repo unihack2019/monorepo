@@ -1,6 +1,10 @@
 import React from 'react';
 import { withStyles, Chip } from '@material-ui/core';
 
+const technologyPresets = {
+  TypeScript: 
+}
+
 const JobTechnology = withStyles((theme) => ({
   chip: {
     margin: theme.spacing.unit
