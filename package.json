@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "format": "prettier --write \"{**/,}*.{js,jsx,ts,tsx}\"",
+    "format": "prettier --write \"{**/,}src/*.{js,jsx,ts,tsx}\"",
     "precommit": "lint-staged"
   },
   "devDependencies": {
