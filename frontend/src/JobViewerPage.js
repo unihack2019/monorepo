@@ -222,7 +222,7 @@ const JobViewerPage = withStyles(theme => {
       flexBasis: '500px',
       flexGrow: 1,
       flexShrink: 1,
-      overflowY: 'hidden',
+      overflowX: 'visible',
     },
   };
 })((

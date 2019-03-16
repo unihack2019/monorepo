@@ -12,14 +12,7 @@ const TechnologyChip = withStyles(
   { withTheme: true },
 )(({ technology, classes, avatar }) => (
   <Chip
-    avatar={
-      <Avatar
-        alt={technology.name}
-        src={icon(technology.name)}
-        className={classes.avatar}
-        {...avatar}
-      />
-    }
+    avatar={<Avatar alt={technology.name} src={icon(technology.name)} className={classes.avatar} {...avatar} />}
     label={technology.name}
     className={classes.chip}
   />

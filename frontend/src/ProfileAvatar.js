@@ -55,7 +55,5 @@ const ProfileAvatar = ({
   />
 );
 const StyledProfileAvatar = withStyles(styles)(ProfileAvatar);
-const WithDefaultsAvatar = ({ size = 100, ...other }) => (
-  <StyledProfileAvatar size={size} {...other} />
-);
+const WithDefaultsAvatar = ({ size = 100, ...other }) => <StyledProfileAvatar size={size} {...other} />;
 export default WithDefaultsAvatar;
