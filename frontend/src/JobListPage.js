@@ -1,21 +1,29 @@
 import React from 'react';
-import { Chip } from '@material-ui/core';
+import { withStyles, Chip } from '@material-ui/core';
 
-const JobTechnology = ({ technology }) => (
-  <Chip label={technology.name}/>
-);
+const JobTechnology = withStyles((theme) => ({
+  chip: {
+    margin: theme.spacing.unit
+  }
+}), { withTheme: true })(({ technology, classes }) => (
+  <Chip label={technology.name} className={classes.chip}/>
+));
 
-const JobItem = ({ job }) => (
+const JobItem = withStyles({
+  tech: {
+    display: 'flex',
+  }
+})(({ job, classes }) => (
   <section>
     <h1>{job.title}</h1>
     <p>{job.description}</p>
-    <div>{
+    <div className={classes.tech}>{
       job.technologies.map(technology => (
         <JobTechnology technology={technology}/>
       ))
     }</div>
   </section>
-);
+));
 
 const jobs = [
   {
@@ -23,6 +31,8 @@ const jobs = [
     description: 'Swek',
     technologies: [{
       name: 'Freaking awesome pants swekness lol'
+    }, {
+      name: 'Rawr',
     }]
   },
   {
