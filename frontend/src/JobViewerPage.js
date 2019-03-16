@@ -31,9 +31,7 @@ const CandidateItem = withStyles(
     render={route => (
       <Card
         className={classes.container}
-        onClick={() =>
-          route.history.push(`${route.match.path}/profiles/${route.match.params.jobId}`)
-        }
+        onClick={() => route.history.push(`${route.match.url}/profiles/${route.match.params.jobId}`)}
       >
         <div className={classes.avatarContainer}>
           <ProfileAvatar size={64} match={profile.match} />
@@ -51,6 +49,38 @@ const CandidateItem = withStyles(
   />
 ));
 
+class Delayed extends React.Component {
+  state = { children: null };
+  componentDidMount() {
+    this.setState({
+      timeout: setTimeout(() => {
+        this.setState({ timeout: null, children: this.props.children });
+      }, this.props.delay),
+    });
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (state.timeout) {
+      return { children: null, timeout: state.timeout };
+    }
+    return {
+      timeout: null,
+      children: props.children,
+    };
+  }
+
+  componentWillUnmount() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+      this.timeout = null;
+    }
+  }
+
+  render() {
+    return this.state.children;
+  }
+}
+
 const CandidateList = withStyles(
   theme => ({
     list: {
@@ -61,30 +91,58 @@ const CandidateList = withStyles(
   }),
   { withTheme: true },
 )(({ classes }) => (
-  <section className={classes.list}>
-    {[
-      {
-        name: 'Erfan Norozi',
-        match: 'verystrong',
-        technologies: [{ name: 'javascript' }, { name: 'go' }, { name: 'express' }],
-        bio:
-          'Big potato face person with good coding skills. Yas, hire this person pl0x.\nThis\nshould\ndefinately cut off at some point in the next couple of lines\ncause this is getting really long',
-        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-      },
-      {
-        name: 'Patrick Shaw',
-        match: 'strong',
-        bio:
-          'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
-        technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
-        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-      },
-    ].map((profile, index) => (
-      <Slide direction="up" in timeout={(index + 1) * 300}>
-        <CandidateItem profile={profile} />
-      </Slide>
-    ))}
-  </section>
+  <Fade in timeout={800}>
+    <section className={classes.list}>
+      {[
+        {
+          name: 'Erfan Norozi',
+          match: 'verystrong',
+          technologies: [{ name: 'javascript' }, { name: 'go' }, { name: 'express' }],
+          bio:
+            'Big potato face person with good coding skills. Yas, hire this person pl0x.\nThis\nshould\ndefinately cut off at some point in the next couple of lines\ncause this is getting really long',
+          avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
+        },
+        {
+          name: 'Patrick Shaw',
+          match: 'strong',
+          bio:
+            'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
+          technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
+          avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
+        },
+        {
+          name: 'Patrick Shaw',
+          match: 'strong',
+          bio:
+            'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
+          technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
+          avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
+        },
+        {
+          name: 'Patrick Shaw',
+          match: 'strong',
+          bio:
+            'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
+          technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
+          avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
+        },
+        {
+          name: 'Patrick Shaw',
+          match: 'strong',
+          bio:
+            'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
+          technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
+          avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
+        },
+      ].map((profile, index) => (
+        <Delayed delay={index * 250}>
+          <Slide direction="up" in timeout={800}>
+            <CandidateItem profile={profile} />
+          </Slide>
+        </Delayed>
+      ))}
+    </section>
+  </Fade>
 ));
 
 const Subheading = props => <Typography variant="h5" gutterBottom {...props} />;
@@ -143,6 +201,8 @@ const JobViewerPage = withStyles(theme => {
   return {
     page: {
       padding: pagePaddingUnit,
+      minHeight: '100%',
+      boxSizing: 'border-box',
     },
     content: {
       display: 'flex',
@@ -151,6 +211,7 @@ const JobViewerPage = withStyles(theme => {
       flexBasis: theme.spacing.unit * 65,
       flexGrow: 0,
       flexShrink: 0,
+      overflow: 'auto',
     },
     gap: {
       flexBasis: pagePaddingUnit,
@@ -161,6 +222,7 @@ const JobViewerPage = withStyles(theme => {
       flexBasis: '500px',
       flexGrow: 1,
       flexShrink: 1,
+      overflowY: 'hidden',
     },
   };
 })((
