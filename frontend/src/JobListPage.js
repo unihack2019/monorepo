@@ -1,16 +1,6 @@
 import React from 'react';
 import { Typography, withStyles } from '@material-ui/core';
 import JobTechnology from './TechnologyChip';
-import RepositorySection from './RepositorySection';
-
-const repositories = [{
-  title: 'Test', 
-  technologies: [{
-    name: 'TypeScript'
-  }, {
-    name: 'React'
-  }]
-}];
 
 const JobItem = withStyles({
   tech: {
@@ -57,7 +47,6 @@ const jobs = [
 
 const JobListPage = () => (
   <div>
-    <RepositorySection repositories={repositories}/>
     {jobs.map(job => <JobItem job={job}/>)}
   </div>
 );
