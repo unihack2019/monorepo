@@ -98,6 +98,8 @@ const CandidateItem = withStyles(
 class Delayed extends React.Component {
   state = { children: null };
   componentDidMount() {
+    // BEST CODE
+    window.scrollTo(0, 0);
     this.setState({
       timeout: setTimeout(() => {
         this.setState({ timeout: null, children: this.props.children });

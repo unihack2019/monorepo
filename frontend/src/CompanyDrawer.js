@@ -1,5 +1,16 @@
-import React, { Component }  from 'react';
-import { Avatar, Typography, Card, withStyles, Drawer, List, Divider, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import React, { Component } from 'react';
+import {
+  Avatar,
+  Typography,
+  Card,
+  withStyles,
+  Drawer,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
 import ListIcon from '@material-ui/icons/List';
 import LabelIcon from '@material-ui/icons/Label';
 import JobTechnology from './TechnologyChip';
@@ -29,7 +40,11 @@ class CompanyDrawer extends Component {
         <List>
           <ListItem>
             <ListItemIcon>
-              <Avatar alt="Remy Sharp" src="https://media.licdn.com/dms/image/C4E0BAQHtd7Urq4aI-Q/company-logo_200_200/0?e=2159024400&v=beta&t=d_u1vuL-XLYS_-loWcW7CtkwZ__S9XLHQ6dDHIqH96s" className={classes.avatar} />
+              <Avatar
+                alt="Remy Sharp"
+                src="https://media.licdn.com/dms/image/C4E0BAQHtd7Urq4aI-Q/company-logo_200_200/0?e=2159024400&v=beta&t=d_u1vuL-XLYS_-loWcW7CtkwZ__S9XLHQ6dDHIqH96s"
+                className={classes.avatar}
+              />
             </ListItemIcon>
             <ListItemText primary="REA Group" />
           </ListItem>
