@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, withStyles, Card, } from '@material-ui/core';
+import { Typography, withStyles, Card, Fade, Slide } from '@material-ui/core';
 import TechnologiesChipList from './TechnologiesChipList';
 import ProfileAvatar from './ProfileAvatar';
 import matchToDisplayName from './matchToDisplayName';
@@ -52,21 +52,26 @@ const CandidateList = withStyles(theme => ({
   }
 }), { withTheme: true })(({ classes }) => (
   <section className={classes.list}>
-    <CandidateItem profile={{
-      name: 'Erfan Norozi',
-      match: 'verystrong',
-      technologies: [{ name: 'javascript' }, { name: 'go'}, { name: 'express'}],
-      bio: 'Big potato face person with good coding skills. Yas, hire this person pl0x.\nThis\nshould\ndefinately cut off at some point in the next couple of lines\ncause this is getting really long',
-      avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-    }} />
-
-    <CandidateItem profile={{
-      name: 'Patrick Shaw',
-      match: 'strong',
-      bio: 'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
-      technologies: [{name: 'typescript'}, {name:'javascript'}, { name: 'java'}],
-      avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-    }} />
+    {[
+      {
+        name: 'Erfan Norozi',
+        match: 'verystrong',
+        technologies: [{ name: 'javascript' }, { name: 'go'}, { name: 'express'}],
+        bio: 'Big potato face person with good coding skills. Yas, hire this person pl0x.\nThis\nshould\ndefinately cut off at some point in the next couple of lines\ncause this is getting really long',
+        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
+      },
+      {
+        name: 'Patrick Shaw',
+        match: 'strong',
+        bio: 'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
+        technologies: [{name: 'typescript'}, {name:'javascript'}, { name: 'java'}],
+        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
+      }
+    ].map((profile, index) => (
+      <Slide direction="up" in timeout={(index + 1) * 300}>
+        <CandidateItem profile={profile}/>
+      </Slide>
+    ))}
   </section>
 ));
 
