@@ -4,11 +4,35 @@ import TechnologiesChipList from './TechnologiesChipList';
 import ProfileAvatar from './ProfileAvatar';
 import matchToDisplayName from './matchToDisplayName';
 import { Route } from 'react-router';
+import db from './api/firebase';
+import { observer } from 'mobx-react';
+import { observable, decorate, action, autorun } from 'mobx';
 
 // Mmmm slow code :P
 function match() {}
 
 const TIMEOUT = 750;
+class Store {
+  applicants = {};
+}
+decorate(Store, {
+  applicants: observable,
+});
+const store = new Store();
+
+autorun(() => {
+  console.log('Rawr', store.applicants);
+});
+
+db.collection('applicants').onSnapshot(snapshot => {
+  snapshot.forEach(
+    action(doc => {
+      const data = doc.data();
+      console.log(data);
+      store.applicants[doc.id] = data;
+    }),
+  );
+});
 
 class SlideFade extends React.Component {
   state = { in: false };
@@ -54,7 +78,7 @@ const CandidateItem = withStyles(
     },
   }),
   { withTheme: true },
-)(({ classes, profile }) => (
+)(({ classes, applicant }) => (
   <Route
     render={route => (
       <Card
@@ -62,15 +86,15 @@ const CandidateItem = withStyles(
         onClick={() => route.history.push(`${route.match.url}/profiles/${route.match.params.jobId}`)}
       >
         <div className={classes.avatarContainer}>
-          <ProfileAvatar size={64} match={profile.match} />
-          <Typography variant="subtitle2">{matchToDisplayName(profile.match)}</Typography>
+          <ProfileAvatar size={64} match={'verystrong'} src={applicant.profile.avatar_url} />
+          <Typography variant="subtitle2">{matchToDisplayName('verystrong')}</Typography>
         </div>
         <div>
           <Typography variant="h6" component="h1">
-            {profile.name}
+            {applicant.profile.name}
           </Typography>
-          <TechnologiesChipList technologies={profile.technologies.slice(0, 3)} />
-          <Typography variant="body1">{profile.bio}</Typography>
+          <Typography variant="body1">{applicant.profile.bio}</Typography>
+          <TechnologiesChipList technologies={applicant.technologies} />
         </div>
       </Card>
     )}
@@ -118,54 +142,17 @@ const CandidateList = withStyles(
     },
   }),
   { withTheme: true },
-)(({ classes }) => (
-  <section className={classes.list}>
-    {[
-      {
-        name: 'Erfan Norozi',
-        match: 'verystrong',
-        technologies: [{ name: 'javascript' }, { name: 'go' }, { name: 'express' }],
-        bio:
-          'Big potato face person with good coding skills. Yas, hire this person pl0x.\nThis\nshould\ndefinately cut off at some point in the next couple of lines\ncause this is getting really long',
-        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-      },
-      {
-        name: 'Patrick Shaw',
-        match: 'strong',
-        bio:
-          'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
-        technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
-        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-      },
-      {
-        name: 'Patrick Shaw',
-        match: 'strong',
-        bio:
-          'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
-        technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
-        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-      },
-      {
-        name: 'Patrick Shaw',
-        match: 'strong',
-        bio:
-          'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
-        technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
-        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-      },
-      {
-        name: 'Patrick Shaw',
-        match: 'strong',
-        bio:
-          'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
-        technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
-        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-      },
-    ].map((profile, index) => (
-      <CandidateItem profile={profile} />
-    ))}
-  </section>
-));
+)(
+  observer(({ classes }) => (
+    <section className={classes.list}>
+      {Object.keys(store.applicants)
+        .map(key => [key, store.applicants[key]])
+        .map(([key, applicant], index) => (
+          <CandidateItem key={key} applicant={applicant} y />
+        ))}
+    </section>
+  )),
+);
 
 const Subheading = props => <Typography variant="h5" gutterBottom {...props} />;
 
@@ -222,7 +209,8 @@ const job = {
     },
   ],
 };
-const JobViewerPage = withStyles(theme => {
+
+const JobViewerPageStyled = withStyles(theme => {
   const pagePaddingUnit = theme.spacing.unit * 6;
   return {
     page: {
@@ -248,8 +236,7 @@ const JobViewerPage = withStyles(theme => {
       flexBasis: '500px',
       flexGrow: 1,
       flexShrink: 1,
-      overflowX: 'visible',
-      overflowY: 'hidden',
+      overflow: 'visible',
     },
   };
 })((
@@ -271,4 +258,4 @@ const JobViewerPage = withStyles(theme => {
     </div>
   </section>
 ));
-export default JobViewerPage;
+export default JobViewerPageStyled;
