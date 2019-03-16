@@ -1,4 +1,6 @@
+# Firebase files
 firebaseSecret.json
+**/.firebase
 
 # Logs
 logs
