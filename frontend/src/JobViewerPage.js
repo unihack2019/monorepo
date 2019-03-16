@@ -4,6 +4,11 @@ import TechnologiesChipList from './TechnologiesChipList';
 import ProfileAvatar from './ProfileAvatar';
 import matchToDisplayName from './matchToDisplayName';
 
+// Mmmm slow code :P
+function match() {
+  
+}
+
 const CandidateItem = withStyles(
   theme => ({
     container: {
@@ -11,6 +16,8 @@ const CandidateItem = withStyles(
       padding: theme.spacing.unit * 2,
     },
     avatar: {
+    },
+    avatarContainer: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -19,12 +26,15 @@ const CandidateItem = withStyles(
     },
   }), { withTheme: true })(({ classes, profile }) => (
   <Card className={classes.container}>
-    <div className={classes.avatar}>
-      <ProfileAvatar size={60} match={profile.match}/>
-      <Typography variant="body2">{matchToDisplayName(profile.match)}</Typography>
+    <div className={classes.avatarContainer}>
+      <div className={classes.avatar}>
+        <ProfileAvatar size={64} match={profile.match}/>
+      </div>
+      <Typography variant="subtitle2">{matchToDisplayName(profile.match)}</Typography>
     </div>
     <div>
-      <Typography variant="h5" component="h1">{profile.name}</Typography>
+      <Typography variant="h6" component="h1">{profile.name}</Typography>
+      <TechnologiesChipList technologies={profile.technologies.slice(0, 3)}/>
       <Typography variant="body1">{profile.bio}</Typography>
     </div>
   </Card>
@@ -39,26 +49,43 @@ const CandidateList = withStyles(theme => ({
 }), { withTheme: true })(({ classes }) => (
   <section className={classes.list}>
     <CandidateItem profile={{
-      name: 'Patrick Shaw',
-      match: 'strong',
-      avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-    }} />
-    <CandidateItem profile={{
       name: 'Erfan Norozi',
       match: 'verystrong',
+      technologies: [{ name: 'javascript' }, { name: 'go'}, { name: 'express'}],
+      bio: 'Big potato face person with good coding skills. Yas, hire this person pl0x.\nThis\nshould\ndefinately cut off at some point in the next couple of lines\ncause this is getting really long',
+      avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
+    }} />
+
+    <CandidateItem profile={{
+      name: 'Patrick Shaw',
+      match: 'strong',
+      bio: 'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
+      technologies: [{name: 'typescript'}, {name:'javascript'}, { name: 'java'}],
       avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
     }} />
   </section>
 ));
 
-const JobListing = ({ job }) => (
-  <section>
-    <Typography variant="h3">{job.title}</Typography>
-    <Typography variant="h4">Preferred technologies</Typography>
-    <TechnologiesChipList technologies={job.technologies}/>
-    <Typography variant="body">{job.description}</Typography>
-  </section>
+const Subheading = (props) => (
+  <Typography variant="h5" gutterBottom {...props} />
 );
+
+const JobListing = withStyles(theme => ({
+  title: {
+  },
+  chipList: {
+    marginBottom: theme.spacing.unit * 2,
+  }
+}), { withTheme: true })(({ job, classes }) => (
+  <section>
+    <Subheading>Preferred technologies</Subheading>
+    <div className={classes.chipList}>
+      <TechnologiesChipList technologies={job.technologies}/>
+    </div>
+    <Subheading>Description</Subheading>
+    <Typography variant="body1" gutterBottom>{job.description}</Typography>
+  </section>
+));
 
 const job = {
   title: 'Job title',
@@ -67,38 +94,56 @@ const job = {
     name: 'typescript',
   }, {
     name: 'react',
+  }, {
+    name: 'express'
+  }, {
+    name: 'TensorFlow'
+  }, {
+    name: 'Go'
+  }, {
+    name: 'Java'
+  }, {
+    name: 'JavaScript'
   }],
 };
-const JobViewerPage = withStyles(theme => ({
-  page: {
-    display: 'flex',
-  },
-  main: {
-    padding: theme.spacing.unit * 2,
-    flexBasis: theme.spacing.unit * 60,
-    flexGrow: 0,
-    flexShrink: 0,
-  },
-  gap: {
-    flexBasis: theme.spacing.unit * 2,
-    flexGrow: 0,
-    flexShrink: 0,
-  },
-  aside: {
-    padding: theme.spacing.unit * 2,
-    flexBasis: '500px',
-    flexGrow: 1,
-    flexShrink: 1,
+const JobViewerPage = withStyles(theme => {
+  const pagePaddingUnit = theme.spacing.unit * 6;
+  return {
+    page: {
+      padding: pagePaddingUnit,
+    },
+    content: {
+      display: 'flex',
+    },
+    main: {
+      flexBasis: theme.spacing.unit * 65,
+      flexGrow: 0,
+      flexShrink: 0,
+    },
+    gap: {
+      flexBasis: pagePaddingUnit,
+      flexGrow: 0,
+      flexShrink: 0,
+    },
+    aside: {
+      flexBasis: '500px',
+      flexGrow: 1,
+      flexShrink: 1,
+    }
   }
-}))(({ classes }) => (//TODO: ({ job }) => (
+})(({ classes }) => (//TODO: ({ job }) => (
   <section className={classes.page}>
-    <main className={classes.main}>
-      <JobListing job={job}/>
-    </main>
-    <div className={classes.gap}/>
-    <aside className={classes.aside}>
-      <CandidateList/>
-    </aside>
+    <Typography variant="h3" className={classes.title} gutterBottom>{job.title}</Typography>
+      <div className={classes.content}>
+      <main className={classes.main}>
+        <JobListing job={job}/>
+      </main>
+      <div className={classes.gap}/>
+      <aside className={classes.aside}>
+        <Subheading>Description</Subheading>
+        <CandidateList/>
+      </aside>
+    </div>
   </section>
 ));
 export default JobViewerPage;

@@ -10,6 +10,7 @@ function matchColor(match) {
     case 'verystrong': return '#4CAF50'
   }
 }
+
 const styles = {
   container: {
     width: ({ size }) => `${size}px`,
@@ -45,3 +46,4 @@ const ProfileAvatar = ({ match, classes, avatar_url="https://avatars0.githubuser
 const StyledProfileAvatar = withStyles(styles)(ProfileAvatar);
 const WithDefaultsAvatar = ({ size=100, ...other }) => <StyledProfileAvatar size={size} {...other}/>
 export default WithDefaultsAvatar;
+  
