@@ -3,13 +3,24 @@ import { Typography, withStyles, Card, Fade, Slide } from '@material-ui/core';
 import TechnologiesChipList from './TechnologiesChipList';
 import ProfileAvatar from './ProfileAvatar';
 import matchToDisplayName from './matchToDisplayName';
-import { Route } from 'react-router';
+import { Route, Switch } from 'react-router';
 import { observer } from 'mobx-react';
 import { toJS } from 'mobx';
 import store from './store';
+import joinUrl from './joinUrl';
+import Profile from './Profile';
 
-// Mmmm slow code :P
-function match() {}
+function scoreToMatch(score) {
+  if (score <= 50000) {
+    return 'poor';
+  } else if (score <= 200000) {
+    return 'moderate';
+  } else if (score <= 1000000) {
+    return 'strong';
+  } else {
+    return 'verystrong';
+  }
+}
 
 const TIMEOUT = 750;
 
@@ -57,20 +68,17 @@ const CandidateItem = withStyles(
     },
   }),
   { withTheme: true },
-)(({ classes, applicant, job }) => {
-  const relevant = store.technologiesRelevant(applicant, job);
-  toJS(relevant).forEach(console.log);
-  console.log('RAWR ' + applicant.profile.name, store.technologyScore(relevant));
+)(({ classes, applicant, applicantId, match, relevant }) => {
   return (
     <Route
       render={route => (
         <Card
           className={classes.container}
-          onClick={() => route.history.push(`${route.match.url}/profiles/${route.match.params.jobId}`)}
+          onClick={() => route.history.push(`/jobs/${route.match.params.jobId}/profiles/${applicantId}`)}
         >
           <div className={classes.avatarContainer}>
-            <ProfileAvatar size={64} match={'verystrong'} src={applicant.profile.avatar_url} />
-            <Typography variant="subtitle2">{matchToDisplayName('verystrong')}</Typography>
+            <ProfileAvatar size={64} match={match} src={applicant.profile.avatar_url} />
+            <Typography variant="subtitle2">{matchToDisplayName(match)}</Typography>
           </div>
           <div>
             <Typography variant="h6" component="h1">
@@ -127,15 +135,31 @@ const CandidateList = withStyles(
   }),
   { withTheme: true },
 )(
-  observer(({ classes, job }) => (
-    <section className={classes.list}>
-      {Object.keys(store.applicants)
-        .map(key => [key, store.applicants[key]])
-        .map(([key, applicant], index) => (
-          <CandidateItem key={key} job={job} applicant={applicant} y />
-        ))}
-    </section>
-  )),
+  observer(({ classes, job }) => {
+    return (
+      <section className={classes.list}>
+        {Object.keys(store.applicants)
+          .map(key => [key, store.applicants[key]])
+          .map(([key, applicant], index) => {
+            const relevant = store.technologiesRelevant(applicant, job);
+            const score = store.technologyScore(relevant);
+            const match = scoreToMatch(score);
+            return { key, applicant, relevant, score, match };
+          })
+          .sort((a, b) => (a.score > b.score ? -1 : a.score < b.score ? 1 : 0))
+          .map(({ key, applicant, relevant, score, match }) => (
+            <CandidateItem
+              key={key}
+              relevant={relevant}
+              score={score}
+              match={match}
+              applicant={applicant}
+              applicantId={key}
+            />
+          ))}
+      </section>
+    );
+  }),
 );
 
 const Subheading = props => <Typography variant="h5" gutterBottom {...props} />;
@@ -211,7 +235,10 @@ const JobViewerPageStyled = withStyles(theme => {
           <div className={classes.gap} />
           <aside className={classes.aside}>
             <Subheading>Description</Subheading>
-            <CandidateList job={job} />
+            <Switch>
+              <Route path={joinUrl(match.url, '/profiles/:githubId')} exact component={Profile} />
+              <Route render={() => <CandidateList job={job} />} />
+            </Switch>
           </aside>
         </div>
       </section>

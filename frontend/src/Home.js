@@ -39,9 +39,7 @@ class Home extends Component {
             </Typography>
           </div>
         </div>
-        <div className={classes.container}>
-          Blah blah
-        </div>
+        <div className={classes.container}>Blah blah</div>
       </>
     );
   }

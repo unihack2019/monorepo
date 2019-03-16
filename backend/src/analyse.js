@@ -11,7 +11,7 @@ function analyse(githubId, token) {
 async function set_technologies(githubId, octokit) {
   const reposResponse = await octokit.repos.list({ per_page: 100 });
 
-  const repos = reposResponse.data.filter(repo => !repo.fork);
+  const repos = reposResponse.data;
 
   const technologiesObject = {};
 
@@ -77,13 +77,18 @@ async function set_technologies(githubId, octokit) {
 async function set_repositories(githubId, octokit) {
   const reposResponse = await octokit.repos.list({ per_page: 100 });
 
-  const repos = reposResponse.data.filter(repo => !repo.fork);
+  const repos = reposResponse.data;
 
   const repositories = await Promise.all(
     repos.map(async githubRepo => {
       const [owner, repo] = githubRepo.full_name.split('/');
-      const languagesResponse = await octokit.repos.listLanguages({ owner, repo });
-      const languages = languagesResponse.data;
+      let languagesResponse = null;
+      try {
+        languagesResponse = await octokit.repos.listLanguages({ owner, repo });
+      } catch (e) {
+        console.error(`Couldn't list languages for ${repo.name}`, e);
+      }
+      const languages = languagesResponse ? languagesResponse.data : [];
       const technologies = Object.keys(languages).map(name => ({
         name,
         locs: languages[name],

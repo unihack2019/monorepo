@@ -109,22 +109,10 @@ class Profile extends Component {
             Repos
           </Typography>
           <div className={classes.horizontalContainer}>
-            <RepoCard
-              className={classes.techCard}
-              name="Kubernetes"
-            />
-            <RepoCard
-              className={classes.techCard}
-              name="BlahBlah"
-            />
-            <RepoCard
-              className={classes.techCard}
-              name="BlahBlah"
-            />
-            <RepoCard
-              className={classes.techCard}
-              name="BlahBlah"
-            />
+            <RepoCard className={classes.techCard} name="Kubernetes" />
+            <RepoCard className={classes.techCard} name="BlahBlah" />
+            <RepoCard className={classes.techCard} name="BlahBlah" />
+            <RepoCard className={classes.techCard} name="BlahBlah" />
           </div>
         </div>
       </div>
