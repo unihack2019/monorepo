@@ -8,6 +8,34 @@ import { Route } from 'react-router';
 // Mmmm slow code :P
 function match() {}
 
+const TIMEOUT = 750;
+
+class SlideFade extends React.Component {
+  state = { in: false };
+  componentDidMount() {
+    this.timeout = setTimeout(() => {
+      this.timeout = null;
+      this.setState({ in: true });
+    }, this.props.delay);
+  }
+
+  componentWillUnmount() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+  }
+
+  render() {
+    return (
+      <Slide direction="up" in={this.state.in} timeout={this.props.timeout}>
+        <Fade in={this.state.in} timeout={this.props.timeout}>
+          {this.props.children}
+        </Fade>
+      </Slide>
+    );
+  }
+}
+
 const CandidateItem = withStyles(
   theme => ({
     container: {
@@ -91,58 +119,52 @@ const CandidateList = withStyles(
   }),
   { withTheme: true },
 )(({ classes }) => (
-  <Fade in timeout={800}>
-    <section className={classes.list}>
-      {[
-        {
-          name: 'Erfan Norozi',
-          match: 'verystrong',
-          technologies: [{ name: 'javascript' }, { name: 'go' }, { name: 'express' }],
-          bio:
-            'Big potato face person with good coding skills. Yas, hire this person pl0x.\nThis\nshould\ndefinately cut off at some point in the next couple of lines\ncause this is getting really long',
-          avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-        },
-        {
-          name: 'Patrick Shaw',
-          match: 'strong',
-          bio:
-            'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
-          technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
-          avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-        },
-        {
-          name: 'Patrick Shaw',
-          match: 'strong',
-          bio:
-            'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
-          technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
-          avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-        },
-        {
-          name: 'Patrick Shaw',
-          match: 'strong',
-          bio:
-            'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
-          technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
-          avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-        },
-        {
-          name: 'Patrick Shaw',
-          match: 'strong',
-          bio:
-            'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
-          technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
-          avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-        },
-      ].map((profile, index) => (
-        <Delayed delay={index * 250}>
-          <Slide direction="up" in timeout={800}>
-            <CandidateItem profile={profile} />
-          </Slide>
-        </Delayed>
-      ))}
-    </section>
-  </Fade>
+  <section className={classes.list}>
+    {[
+      {
+        name: 'Erfan Norozi',
+        match: 'verystrong',
+        technologies: [{ name: 'javascript' }, { name: 'go' }, { name: 'express' }],
+        bio:
+          'Big potato face person with good coding skills. Yas, hire this person pl0x.\nThis\nshould\ndefinately cut off at some point in the next couple of lines\ncause this is getting really long',
+        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
+      },
+      {
+        name: 'Patrick Shaw',
+        match: 'strong',
+        bio:
+          'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
+        technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
+        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
+      },
+      {
+        name: 'Patrick Shaw',
+        match: 'strong',
+        bio:
+          'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
+        technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
+        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
+      },
+      {
+        name: 'Patrick Shaw',
+        match: 'strong',
+        bio:
+          'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
+        technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
+        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
+      },
+      {
+        name: 'Patrick Shaw',
+        match: 'strong',
+        bio:
+          'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
+        technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
+        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
+      },
+    ].map((profile, index) => (
+      <CandidateItem profile={profile} />
+    ))}
+  </section>
 ));
 
 const Subheading = props => <Typography variant="h5" gutterBottom {...props} />;
@@ -157,14 +179,18 @@ const JobListing = withStyles(
   { withTheme: true },
 )(({ job, classes }) => (
   <section>
-    <Subheading>Preferred technologies</Subheading>
-    <div className={classes.chipList}>
-      <TechnologiesChipList technologies={job.technologies} />
+    <div>
+      <Subheading>Preferred technologies</Subheading>
+      <div className={classes.chipList}>
+        <TechnologiesChipList technologies={job.technologies} />
+      </div>
     </div>
-    <Subheading>Description</Subheading>
-    <Typography variant="body1" gutterBottom>
-      {job.description}
-    </Typography>
+    <div>
+      <Subheading>Description</Subheading>
+      <Typography variant="body1" gutterBottom>
+        {job.description}
+      </Typography>
+    </div>
   </section>
 ));
 
@@ -223,6 +249,7 @@ const JobViewerPage = withStyles(theme => {
       flexGrow: 1,
       flexShrink: 1,
       overflowX: 'visible',
+      overflowY: 'hidden',
     },
   };
 })((
