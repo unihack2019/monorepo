@@ -1,20 +1,15 @@
 import React from 'react';
-import { withStyles, Chip, Avatar } from '@material-ui/core';
-function stripTechName(name) {
-  return name.toLowerCase().replace(/-/g, '');
-}
+import JobTechnology from './TechnologyChip';
+import RepositorySection from './RepositorySection';
 
-const JobTechnology = withStyles((theme) => ({
-  chip: {
-    margin: theme.spacing.unit
-  }
-}), { withTheme: true })(({ technology, classes }) => (
-  <Chip 
-    avatar={<Avatar alt={technology.name} src={require('./devicons')[stripTechName(technology.name)]}/>}
-    label={technology.name} 
-    className={classes.chip}
-  />
-));
+const repositories = [{
+  title: 'Test', 
+  technologies: [{
+    name: 'TypeScript'
+  }, {
+    name: 'React'
+  }]
+}];
 
 const JobItem = withStyles({
   tech: {
@@ -22,7 +17,11 @@ const JobItem = withStyles({
   }
 })(({ job, classes }) => (
   <section>
-    <h1>{job.title}</h1>
+    <Typography variant="h1" component="h1">
+      {job.title}
+    </Typography>
+    <Typography variant="p" component="p">
+    </Typography>
     <p>{job.description}</p>
     <div className={classes.tech}>{
       job.technologies.map(technology => (
@@ -55,6 +54,11 @@ const jobs = [
   }
 ];
 
-export default () => (
-  jobs.map(job => <JobItem job={job}/>)
+const JobListPage = () => (
+  <div>
+    <RepositorySection repositories={repositories}/>
+    {jobs.map(job => <JobItem job={job}/>)}
+  </div>
 );
+
+export default JobListPage;
