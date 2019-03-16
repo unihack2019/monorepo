@@ -45,10 +45,10 @@ const styles = {
   expandOpen: {
     transform: 'rotate(180deg)',
   },
-}
+};
 
 class Profile extends Component {
-  state = { showTech: false }
+  state = { showTech: false };
 
   render() {
     const { classes } = this.props;
@@ -58,7 +58,7 @@ class Profile extends Component {
       <div className={classnames(classes.container, classes.verticalContainer)}>
         <div className={classes.horizontalContainer}>
           <div className={classes.firstCol}>
-            <ProfileAvatar match="verystrong"/>
+            <ProfileAvatar match="verystrong" />
           </div>
           <div className={classes.secondCol}>
             <Typography component="h1" variant="h3" gutterBottom>
@@ -71,7 +71,8 @@ class Profile extends Component {
               dev@erfan.io
             </Typography>
             <Typography component="p" variant="body1">
-              I program... When I'm not programming I'm sleeping. When I'm not sleeping I'm programming. See how this works? :D
+              I program... When I'm not programming I'm sleeping. When I'm not sleeping I'm
+              programming. See how this works? :D
             </Typography>
           </div>
         </div>

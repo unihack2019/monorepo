@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Home from './Home';
-import Github from "./api/Github";
+import Github from './api/Github';
 import JobListPage from './JobListPage';
 import Profile from './Profile';
 import ErrorPage from './ErrorPage';

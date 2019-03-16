@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 export default class Github extends Component {
   async componentDidMount() {
@@ -6,10 +6,10 @@ export default class Github extends Component {
     const searchParams = new URLSearchParams(search);
     const code = searchParams.get('code');
 
-    const authResponse = await fetch(`http://localhost:3001/github/${code}` , {
+    const authResponse = await fetch(`http://localhost:3001/github/${code}`, {
       method: 'POST',
       headers: {
-        Accept: 'application/json'
+        Accept: 'application/json',
       },
     });
 

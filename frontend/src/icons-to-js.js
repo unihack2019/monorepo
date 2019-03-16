@@ -10,24 +10,25 @@ function originalIcon(folderName) {
 }
 
 function exportStatement(folderName, importName) {
-  return `export { default as ${folderName.replace(/-/g, '').toLowerCase()} } from './${
-    relative(__dirname, importName).replace(/\\/g, '/')
-  }';\n`;      
+  return `export { default as ${folderName.replace(/-/g, '').toLowerCase()} } from './${relative(
+    __dirname,
+    importName,
+  ).replace(/\\/g, '/')}';\n`;
 }
 async function createTheFile() {
   const paths = await globby([join(__dirname, 'devicon-master/*')], { onlyFiles: false });
   let code = '';
-  for(const path of paths) {
+  for (const path of paths) {
     const folderName = basename(path);
     const original = join(path, originalIcon(folderName));
     const plain = join(path, plainIcon(folderName));
-    
+
     if (await exists(original)) {
       code += exportStatement(folderName, original);
     } else if (await exists(plain)) {
       code += exportStatement(folderName, plain);
     }
-  }  
+  }
   /*
   code += 'export default {\n';
   for(const path of paths) {

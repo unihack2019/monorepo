@@ -8,13 +8,15 @@ const TechnologiesChipList = withStyles(theme => {
       '&>*:not(:last-child)': {
         marginRight: theme.spacing.unit,
         marginBottom: verticalMargin,
-        marginTop: verticalMargin
-      }
-    }
-  }
+        marginTop: verticalMargin,
+      },
+    },
+  };
 })(({ technologies, classes }) => (
-  <div className={classes.list} >
-    {technologies.map(technology => <TechnologyChip technology={technology}/>)}
+  <div className={classes.list}>
+    {technologies.map(technology => (
+      <TechnologyChip technology={technology} />
+    ))}
   </div>
 ));
 export default TechnologiesChipList;

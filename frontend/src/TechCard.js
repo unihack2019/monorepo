@@ -9,7 +9,7 @@ const styles = {
 
 const TechCard = ({ classes, className, name, icon, repos, points }) => (
   <Card className={className}>
-    <CardHeader title={name} avatar={<Avatar src={icon}></Avatar>} />
+    <CardHeader title={name} avatar={<Avatar src={icon} />} />
     <CardContent className={classes.content}>
       <Typography component="p" variant="body1" gutterBottom>
         {repos} Repos

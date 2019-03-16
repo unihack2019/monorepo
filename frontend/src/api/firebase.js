@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import config from "../firebaseSecret";
+import config from '../firebaseSecret';
 
 // Initialize Firebase
 firebase.initializeApp(config);

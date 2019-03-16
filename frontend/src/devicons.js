@@ -1,4 +1,6 @@
-export { default as amazonwebservices } from './devicon-master/amazonwebservices/amazonwebservices-original.svg';
+export {
+  default as amazonwebservices,
+} from './devicon-master/amazonwebservices/amazonwebservices-original.svg';
 export { default as android } from './devicon-master/android/android-original.svg';
 export { default as angularjs } from './devicon-master/angularjs/angularjs-original.svg';
 export { default as apache } from './devicon-master/apache/apache-original.svg';
