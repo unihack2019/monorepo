@@ -1,5 +1,7 @@
 import React from 'react';
 import { Typography, withStyles, Card, Fade, Slide } from '@material-ui/core';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import LinkIcon from '@material-ui/icons/Link';
 import TechnologiesChipList from './TechnologiesChipList';
 import ProfileAvatar from './ProfileAvatar';
 import matchToDisplayName from './matchToDisplayName';
@@ -84,6 +86,20 @@ const CandidateItem = withStyles(
       fontWeight: 700,
       fontSize: '14px',
       paddingTop: '8px',
+    },
+    iconText: {
+      '& > p': {
+        marginLeft: '5px',
+      },
+      '& > a': {
+        marginLeft: '5px',
+      },
+      display: 'flex',
+      alignItems: 'center',
+      marginBottom: '0.35em',
+    },
+    chipList: {
+      marginTop: '10px',
     }
   }),
   { withTheme: true },
@@ -105,11 +121,25 @@ const CandidateItem = withStyles(
             </Typography>
           </div>
           <div>
-            <Typography variant="h6" component="h1">
+            <Typography variant="h6" component="h1" gutterBottom>
               {applicant.profile.name}
             </Typography>
-            <Typography variant="body1">{applicant.profile.bio}</Typography>
-            <TechnologiesChipList technologies={relevant} />
+            {applicant.profile.location ? (
+              <div className={classes.iconText}>
+                <LocationOnIcon fontSize="small" />
+                <Typography variant="body1">{applicant.profile.location}</Typography>
+              </div>
+            ) : null}
+            {applicant.profile.blog ? (
+              <div className={classes.iconText}>
+                <LinkIcon fontSize="small" />
+                <Typography component="a" variant="body1" href={applicant.profile.blog} target="_blank">{applicant.profile.blog}</Typography>
+              </div>
+            ) : null}
+            {applicant.profile.bio ? (
+              <Typography variant="body1" gutterBottom>{applicant.profile.bio}</Typography>
+            ) : null}
+            <TechnologiesChipList technologies={relevant} className={classes.chipList} />
           </div>
         </Card>
       )}
