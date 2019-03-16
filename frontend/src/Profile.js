@@ -28,6 +28,7 @@ const styles = {
     flex: '1 1 auto',
     display: 'flex',
     flexFlow: 'column nowrap',
+    maxWidth: '400px',
   },
   techCard: {
     flex: '1 0 auto',
@@ -63,8 +64,14 @@ class Profile extends Component {
             <Typography component="h1" variant="h3" gutterBottom>
               John Applicant
             </Typography>
-            <Typography component="p" variant="h5" gutterBottom>
+            <Typography component="p" variant="p" gutterBottom>
               erfanio
+            </Typography>
+            <Typography component="p" variant="p" gutterBottom>
+              dev@erfan.io
+            </Typography>
+            <Typography component="p" variant="p">
+              I program... When I'm not programming I'm sleeping. When I'm not sleeping I'm programming. See how this works? :D
             </Typography>
           </div>
         </div>
