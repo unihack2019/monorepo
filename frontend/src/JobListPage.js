@@ -44,6 +44,6 @@ const jobs = [
   }
 ];
 
-export const JobListPage = () => (
+export default () => (
   jobs.map(job => <JobItem job={job}/>)
 );
