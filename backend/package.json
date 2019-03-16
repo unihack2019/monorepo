@@ -6,6 +6,7 @@
     "start": "node ./src/index.js"
   },
   "dependencies": {
+    "@octokit/rest": "^16.19.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "firebase": "^5.9.0",

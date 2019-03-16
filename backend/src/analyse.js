@@ -18,8 +18,9 @@ async function set_technologies(githubId, token) {
 
 async function set_repositories(githubId, token) {
   const octokit = new Octokit({ auth: `token ${token}` });
-  const reposResponse = await octokit.repos.list({ per_page: 1 });
-  const repos = reposResponse.data;
+  const reposResponse = await octokit.repos.list({ per_page: 100 });
+
+  const repos = reposResponse.data.filter(repo => !repo.fork);
 
   const repositories = await Promise.all(
     repos.map(async githubRepo => {
