@@ -6,16 +6,14 @@ export default class Github extends Component {
     const searchParams = new URLSearchParams(search);
     const code = searchParams.get('code');
 
-    const response = await fetch(`http://localhost:3001/github/${code}` , {
+    const authResponse = await fetch(`http://localhost:3001/github/${code}` , {
       method: 'POST',
       headers: {
         Accept: 'application/json'
       },
     });
 
-    const json = await response.json();
-
-    console.log(json.access_token);
+    const githubId = await authResponse.json();
 
     this.props.history.push('/');
   }
