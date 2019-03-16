@@ -4,22 +4,25 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  state = {
+    message: "Loading..."
+  };
+
+  componentDidMount() {
+    this.props.database.collection("tests").doc("test").get().then(doc => {
+      console.log(doc.data());
+      this.setState({ message: JSON.stringify(doc.data()) });
+    });
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            { this.state.message }
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
         </header>
         <JobListPage/>
       </div>
