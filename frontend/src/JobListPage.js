@@ -21,12 +21,16 @@ const jobs = [
   {
     title: 'Bleh',
     description: 'Swek',
-    technologies: ['Freaking awesome pants swekness lol']
+    technologies: [{
+      name: 'Freaking awesome pants swekness lol'
+    }]
   },
   {
     title: 'OMG so swek',
     description: 'rawr',
-    technologies: ['Hi david']
+    technologies: [{
+      name: 'Hi david'
+    }]
   }
 ];
 
