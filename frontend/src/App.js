@@ -1,31 +1,17 @@
 import React, { Component } from 'react';
-import { JobListPage } from './JobListPage';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import Home from './Home';
+import JobListPage from './JobListPage';
 import './App.css';
 
 class App extends Component {
-  state = {
-    message: "Loading..."
-  };
-
-  componentDidMount() {
-    this.props.database.collection("tests").doc("test").get().then(doc => {
-      console.log(doc.data());
-      this.setState({ message: JSON.stringify(doc.data()) });
-    });
-  }
-
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            { this.state.message }
-          </p>
-        </header>
-        <JobListPage/>
-      </div>
+      <Router>
+        <Route path="/" exact component={Home} />
+        <Route path="/jobs" component={JobListPage} />
+      </Router>
     );
   }
 }
