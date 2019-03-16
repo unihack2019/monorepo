@@ -1,8 +1,7 @@
 import React from 'react';
-import { withStyles, Chip } from '@material-ui/core';
-
-const technologyPresets = {
-  TypeScript: 
+import { withStyles, Chip, Avatar } from '@material-ui/core';
+function stripTechName(name) {
+  return name.toLowerCase().replace(/-/g, '');
 }
 
 const JobTechnology = withStyles((theme) => ({
@@ -10,7 +9,11 @@ const JobTechnology = withStyles((theme) => ({
     margin: theme.spacing.unit
   }
 }), { withTheme: true })(({ technology, classes }) => (
-  <Chip label={technology.name} className={classes.chip}/>
+  <Chip 
+    avatar={<Avatar alt={technology.name} src={require('./devicons')[stripTechName(technology.name)]}/>}
+    label={technology.name} 
+    className={classes.chip}
+  />
 ));
 
 const JobItem = withStyles({
@@ -43,7 +46,11 @@ const jobs = [
     title: 'OMG so swek',
     description: 'rawr',
     technologies: [{
-      name: 'Hi david'
+      name: 'Hi david',
+    }, {
+      name: 'express'
+    }, {
+      name: 'TypeScript'
     }]
   }
 ];

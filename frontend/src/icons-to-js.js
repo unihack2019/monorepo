@@ -10,8 +10,8 @@ function originalIcon(folderName) {
 }
 
 function exportStatement(folderName, importName) {
-  return `export { default as ${folderName} } from './${
-    relative(__dirname, importName).replace(/\\/g, '/').replace(/\.svg$/, '')
+  return `export { default as ${folderName.replace(/-/g, '').toLowerCase()} } from './${
+    relative(__dirname, importName).replace(/\\/g, '/')
   }';\n`;      
 }
 async function createTheFile() {
