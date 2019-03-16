@@ -29,9 +29,13 @@ const styles = {
   },
 }
 
-const ProfileAvatar = ({ match, classes }) => (
+const ProfileAvatar = ({ match, classes, avatar_url="https://avatars0.githubusercontent.com/u/9994172?s=460&v=4" }) => (
   <div className={classnames(classes.container, classes[match])}>
-    <img className={classes.image} src="https://avatars0.githubusercontent.com/u/9994172?s=460&v=4" />
+    <img
+      alt="Avatar"
+      className={classes.image}
+      src={avatar_url}
+    />
   </div>
 );
 export default withStyles(styles)(ProfileAvatar);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography, withStyles, Card, } from '@material-ui/core';
 import TechnologiesChipList from './TechnologiesChipList';
+import ProfileAvatar from './ProfileAvatar';
 
 const PlaceHolderAvatar = () => (
   <div>Rawr</div>
@@ -17,7 +18,7 @@ const CandidateItem = withStyles(
   }), { withTheme: true })(({ classes, profile }) => (
   <Card className={classes.container}>
     <div className={classes.avatar}>
-      <PlaceHolderAvatar url={profile.avatar_url}/>
+      <ProfileAvatar match={profile.match}/>
     </div>
     <div>
       <Typography variant="h5" component="h1">{profile.name}</Typography>
