@@ -1,8 +1,6 @@
 import React from 'react';
 import { withStyles, Chip, Avatar } from '@material-ui/core'; 
-function stripTechName(name) {
-  return name.toLowerCase().replace(/-/g, '');
-}
+import icon from './icon';
 
 const TechnologyChip = withStyles((theme) => ({
   chip: {
@@ -10,7 +8,7 @@ const TechnologyChip = withStyles((theme) => ({
   }
 }), { withTheme: true })(({ technology, classes }) => (
   <Chip 
-    avatar={<Avatar alt={technology.name} src={require('./devicons')[stripTechName(technology.name)]}/>}
+    avatar={<Avatar alt={technology.name} src={icon(technology.name)}/>}
     label={technology.name} 
     className={classes.chip}
   />
