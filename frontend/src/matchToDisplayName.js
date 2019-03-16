@@ -1,6 +1,6 @@
 function matchToDisplayName(match) {
-  if(match==='verystrong') {
-    return 'very strong'
+  if (match === 'verystrong') {
+    return 'very strong';
   }
   return match;
 }
