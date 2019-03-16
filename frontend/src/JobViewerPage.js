@@ -11,6 +11,19 @@ import store from './store';
 // Mmmm slow code :P
 function match() {}
 
+function matchColor(match) {
+  switch (match) {
+    case 'poor':
+      return '#F44336';
+    case 'moderate':
+      return '#FFC107';
+    case 'strong':
+      return '#8bc34a';
+    case 'verystrong':
+      return '#4CAF50';
+  }
+}
+
 const TIMEOUT = 750;
 
 class SlideFade extends React.Component {
@@ -55,12 +68,19 @@ const CandidateItem = withStyles(
       textAlign: 'center',
       marginRight: theme.spacing.unit * 2,
     },
+    match: {
+      textTransform: 'uppercase',
+      fontWeight: 700,
+      fontSize: '14px',
+      paddingTop: '8px',
+    }
   }),
   { withTheme: true },
 )(({ classes, applicant, job }) => {
   const relevant = store.technologiesRelevant(applicant, job);
   toJS(relevant).forEach(console.log);
   console.log('RAWR ' + applicant.profile.name, store.technologyScore(relevant));
+  const match = 'strong';
   return (
     <Route
       render={route => (
@@ -69,8 +89,10 @@ const CandidateItem = withStyles(
           onClick={() => route.history.push(`${route.match.url}/profiles/${route.match.params.jobId}`)}
         >
           <div className={classes.avatarContainer}>
-            <ProfileAvatar size={64} match={'verystrong'} src={applicant.profile.avatar_url} />
-            <Typography variant="subtitle2">{matchToDisplayName('verystrong')}</Typography>
+            <ProfileAvatar size={64} match={match} src={applicant.profile.avatar_url} />
+            <Typography variant="subtitle2" style={{color: matchColor(match)}} className={classes.match}>
+              {matchToDisplayName(match)}
+            </Typography>
           </div>
           <div>
             <Typography variant="h6" component="h1">

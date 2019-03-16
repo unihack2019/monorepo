@@ -2,6 +2,7 @@ import React from 'react';
 import { Avatar } from '@material-ui/core';
 import withStyles from 'react-jss';
 import classnames from 'classnames';
+
 function matchColor(match) {
   switch (match) {
     case 'poor':
@@ -9,7 +10,7 @@ function matchColor(match) {
     case 'moderate':
       return '#FFC107';
     case 'strong':
-      return '#CDDC39';
+      return '#8bc34a';
     case 'verystrong':
       return '#4CAF50';
   }
