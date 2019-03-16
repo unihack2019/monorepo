@@ -31,9 +31,7 @@ const CandidateItem = withStyles(
     render={route => (
       <Card
         className={classes.container}
-        onClick={() =>
-          route.history.push(`${route.match.path}/profiles/${route.match.params.jobId}`)
-        }
+        onClick={() => route.history.push(`${route.match.path}/profiles/${route.match.params.jobId}`)}
       >
         <div className={classes.avatarContainer}>
           <ProfileAvatar size={64} match={profile.match} />

@@ -71,8 +71,8 @@ class Profile extends Component {
               dev@erfan.io
             </Typography>
             <Typography component="p" variant="body1">
-              I program... When I'm not programming I'm sleeping. When I'm not sleeping I'm
-              programming. See how this works? :D
+              I program... When I'm not programming I'm sleeping. When I'm not sleeping I'm programming. See how this
+              works? :D
             </Typography>
           </div>
         </div>
@@ -82,64 +82,16 @@ class Profile extends Component {
           </Typography>
           <Collapse collapsedHeight="150px" in={showTech}>
             <div className={classes.horizontalContainer}>
-              <TechCard
-                className={classes.techCard}
-                name="Java"
-                icon={icon('java')}
-                repos="3"
-                points="383"
-              />
-              <TechCard
-                className={classes.techCard}
-                name="Python"
-                icon={icon('python')}
-                repos="12"
-                points="7893"
-              />
-              <TechCard
-                className={classes.techCard}
-                name="Java"
-                icon={icon('java')}
-                repos="3"
-                points="383"
-              />
-              <TechCard
-                className={classes.techCard}
-                name="Java"
-                icon={icon('java')}
-                repos="3"
-                points="383"
-              />
+              <TechCard className={classes.techCard} name="Java" icon={icon('java')} repos="3" points="383" />
+              <TechCard className={classes.techCard} name="Python" icon={icon('python')} repos="12" points="7893" />
+              <TechCard className={classes.techCard} name="Java" icon={icon('java')} repos="3" points="383" />
+              <TechCard className={classes.techCard} name="Java" icon={icon('java')} repos="3" points="383" />
             </div>
             <div className={classes.horizontalContainer}>
-              <TechCard
-                className={classes.techCard}
-                name="Java"
-                icon={icon('java')}
-                repos="3"
-                points="383"
-              />
-              <TechCard
-                className={classes.techCard}
-                name="Java"
-                icon={icon('java')}
-                repos="3"
-                points="383"
-              />
-              <TechCard
-                className={classes.techCard}
-                name="Java"
-                icon={icon('java')}
-                repos="3"
-                points="383"
-              />
-              <TechCard
-                className={classes.techCard}
-                name="Java"
-                icon={icon('java')}
-                repos="3"
-                points="383"
-              />
+              <TechCard className={classes.techCard} name="Java" icon={icon('java')} repos="3" points="383" />
+              <TechCard className={classes.techCard} name="Java" icon={icon('java')} repos="3" points="383" />
+              <TechCard className={classes.techCard} name="Java" icon={icon('java')} repos="3" points="383" />
+              <TechCard className={classes.techCard} name="Java" icon={icon('java')} repos="3" points="383" />
             </div>
           </Collapse>
           <IconButton
