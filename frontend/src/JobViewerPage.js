@@ -4,6 +4,9 @@ import TechnologiesChipList from './TechnologiesChipList';
 import ProfileAvatar from './ProfileAvatar';
 import matchToDisplayName from './matchToDisplayName';
 import { Route } from 'react-router';
+import { observer } from 'mobx-react';
+import { toJS } from 'mobx';
+import store from './store';
 
 // Mmmm slow code :P
 function match() {}
@@ -54,28 +57,33 @@ const CandidateItem = withStyles(
     },
   }),
   { withTheme: true },
-)(({ classes, profile }) => (
-  <Route
-    render={route => (
-      <Card
-        className={classes.container}
-        onClick={() => route.history.push(`${route.match.url}/profiles/${route.match.params.jobId}`)}
-      >
-        <div className={classes.avatarContainer}>
-          <ProfileAvatar size={64} match={profile.match} />
-          <Typography variant="subtitle2">{matchToDisplayName(profile.match)}</Typography>
-        </div>
-        <div>
-          <Typography variant="h6" component="h1">
-            {profile.name}
-          </Typography>
-          <TechnologiesChipList technologies={profile.technologies.slice(0, 3)} />
-          <Typography variant="body1">{profile.bio}</Typography>
-        </div>
-      </Card>
-    )}
-  />
-));
+)(({ classes, applicant, job }) => {
+  const relevant = store.technologiesRelevant(applicant, job);
+  toJS(relevant).forEach(console.log);
+  console.log('RAWR ' + applicant.profile.name, store.technologyScore(relevant));
+  return (
+    <Route
+      render={route => (
+        <Card
+          className={classes.container}
+          onClick={() => route.history.push(`${route.match.url}/profiles/${route.match.params.jobId}`)}
+        >
+          <div className={classes.avatarContainer}>
+            <ProfileAvatar size={64} match={'verystrong'} src={applicant.profile.avatar_url} />
+            <Typography variant="subtitle2">{matchToDisplayName('verystrong')}</Typography>
+          </div>
+          <div>
+            <Typography variant="h6" component="h1">
+              {applicant.profile.name}
+            </Typography>
+            <Typography variant="body1">{applicant.profile.bio}</Typography>
+            <TechnologiesChipList technologies={relevant} />
+          </div>
+        </Card>
+      )}
+    />
+  );
+});
 
 class Delayed extends React.Component {
   state = { children: null };
@@ -118,54 +126,17 @@ const CandidateList = withStyles(
     },
   }),
   { withTheme: true },
-)(({ classes }) => (
-  <section className={classes.list}>
-    {[
-      {
-        name: 'Erfan Norozi',
-        match: 'verystrong',
-        technologies: [{ name: 'javascript' }, { name: 'go' }, { name: 'express' }],
-        bio:
-          'Big potato face person with good coding skills. Yas, hire this person pl0x.\nThis\nshould\ndefinately cut off at some point in the next couple of lines\ncause this is getting really long',
-        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-      },
-      {
-        name: 'Patrick Shaw',
-        match: 'strong',
-        bio:
-          'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
-        technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
-        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-      },
-      {
-        name: 'Patrick Shaw',
-        match: 'strong',
-        bio:
-          'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
-        technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
-        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-      },
-      {
-        name: 'Patrick Shaw',
-        match: 'strong',
-        bio:
-          'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
-        technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
-        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-      },
-      {
-        name: 'Patrick Shaw',
-        match: 'strong',
-        bio:
-          'Ah mah gahd sah g0000000000000000000000000000000000000000d. Pls hire meh.\n Soemthing something yadad rawr potatos carrots stuff.\n Something something something\n Rawr rawr\n AWesome awesome',
-        technologies: [{ name: 'typescript' }, { name: 'javascript' }, { name: 'java' }],
-        avatar_url: 'https://avatars2.githubusercontent.com/u/5153619?s=460&v=4',
-      },
-    ].map((profile, index) => (
-      <CandidateItem profile={profile} />
-    ))}
-  </section>
-));
+)(
+  observer(({ classes, job }) => (
+    <section className={classes.list}>
+      {Object.keys(store.applicants)
+        .map(key => [key, store.applicants[key]])
+        .map(([key, applicant], index) => (
+          <CandidateItem key={key} job={job} applicant={applicant} y />
+        ))}
+    </section>
+  )),
+);
 
 const Subheading = props => <Typography variant="h5" gutterBottom {...props} />;
 
@@ -188,41 +159,13 @@ const JobListing = withStyles(
     <div>
       <Subheading>Description</Subheading>
       <Typography variant="body1" gutterBottom>
-        {job.description}
+        <span dangerouslySetInnerHTML={{ __html: job.description }} />
       </Typography>
     </div>
   </section>
 ));
 
-const job = {
-  title: 'Job title',
-  description:
-    'Description here aewrpoakwerpo awkrpoewak rpoawkerpewkr poawekrpo ewakr powekrp aewkr \n awpeoroaewpro kaewporwk \n\naopwekraperkaweoprk',
-  technologies: [
-    {
-      name: 'typescript',
-    },
-    {
-      name: 'react',
-    },
-    {
-      name: 'express',
-    },
-    {
-      name: 'TensorFlow',
-    },
-    {
-      name: 'Go',
-    },
-    {
-      name: 'Java',
-    },
-    {
-      name: 'JavaScript',
-    },
-  ],
-};
-const JobViewerPage = withStyles(theme => {
+const JobViewerPageStyled = withStyles(theme => {
   const pagePaddingUnit = theme.spacing.unit * 6;
   return {
     page: {
@@ -248,27 +191,31 @@ const JobViewerPage = withStyles(theme => {
       flexBasis: '500px',
       flexGrow: 1,
       flexShrink: 1,
-      overflowX: 'visible',
-      overflowY: 'hidden',
+      overflow: 'visible',
     },
   };
-})((
-  { classes }, //TODO: ({ job }) => (
-) => (
-  <section className={classes.page}>
-    <Typography variant="h3" className={classes.title} gutterBottom>
-      {job.title}
-    </Typography>
-    <div className={classes.content}>
-      <main className={classes.main}>
-        <JobListing job={job} />
-      </main>
-      <div className={classes.gap} />
-      <aside className={classes.aside}>
-        <Subheading>Description</Subheading>
-        <CandidateList />
-      </aside>
-    </div>
-  </section>
-));
-export default JobViewerPage;
+})(
+  observer((
+    { classes, match }, //TODO: ({ job }) => (
+  ) => {
+    const job = store.jobs[match.params.jobId];
+    return job ? (
+      <section className={classes.page}>
+        <Typography variant="h3" className={classes.title} gutterBottom>
+          {job.title}
+        </Typography>
+        <div className={classes.content}>
+          <main className={classes.main}>
+            <JobListing job={job} />
+          </main>
+          <div className={classes.gap} />
+          <aside className={classes.aside}>
+            <Subheading>Description</Subheading>
+            <CandidateList job={job} />
+          </aside>
+        </div>
+      </section>
+    ) : null;
+  }),
+);
+export default JobViewerPageStyled;

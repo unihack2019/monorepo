@@ -11,11 +11,22 @@ const TechnologyChip = withStyles(
     },
   }),
   { withTheme: true },
-)(({ className, technology, classes, avatar }) => (
-  <Chip
-    avatar={<Avatar alt={technology.name} src={icon(technology.name)} className={classes.avatar} {...avatar} />}
-    label={technology.name}
-    className={classnames(classes.chip, className)}
-  />
-));
+)(({ technology, classes, avatar, className }) => {
+  const theIcon = icon(technology.name);
+  return (
+    <Chip
+      avatar={
+        theIcon ? (
+          <Avatar alt={technology.name} src={theIcon} className={classes.avatar} {...avatar} />
+        ) : (
+          <Avatar alt={technology.name} className={classes.avatar} {...avatar}>
+            {technology.name.slice(0, 1).toUpperCase()}
+          </Avatar>
+        )
+      }
+      label={technology.name}
+      className={classnames(classes.chip, className)}
+    />
+  );
+});
 export default TechnologyChip;

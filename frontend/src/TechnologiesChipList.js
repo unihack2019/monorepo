@@ -14,8 +14,8 @@ const TechnologiesChipList = withStyles(theme => {
   };
 })(({ technologies, classes }) => (
   <div className={classes.list}>
-    {technologies.map(technology => (
-      <TechnologyChip technology={technology} />
+    {technologies.map((technology, i) => (
+      <TechnologyChip key={i} technology={technology} />
     ))}
   </div>
 ));
