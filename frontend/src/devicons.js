@@ -20,7 +20,7 @@ export { default as codeigniter } from './devicon-master/codeigniter/codeigniter
 export { default as coffeescript } from './devicon-master/coffeescript/coffeescript-original.svg';
 export { default as confluence } from './devicon-master/confluence/confluence-original.svg';
 export { default as couchdb } from './devicon-master/couchdb/couchdb-original.svg';
-export { default as cplusplus } from './devicon-master/cplusplus/cplusplus-original.svg';
+export { default as cpp } from './devicon-master/cpp/cpp-original.svg';
 export { default as csharp } from './devicon-master/csharp/csharp-original.svg';
 export { default as css3 } from './devicon-master/css3/css3-original.svg';
 export { default as cucumber } from './devicon-master/cucumber/cucumber-plain.svg';
@@ -100,8 +100,8 @@ export { default as slack } from './devicon-master/slack/slack-original.svg';
 export { default as sourcetree } from './devicon-master/sourcetree/sourcetree-original.svg';
 export { default as sql } from './devicon-master/sql/sql-original.svg';
 export { default as ssh } from './devicon-master/ssh/ssh-original.svg';
-export { default as swift } from './devicon-master/swift/swift-original.svg';
 export { default as stylus } from './devicon-master/stylus/stylus-original.svg';
+export { default as swift } from './devicon-master/swift/swift-original.svg';
 export { default as symfony } from './devicon-master/symfony/symfony-original.svg';
 export { default as tomcat } from './devicon-master/tomcat/tomcat-original.svg';
 export { default as travis } from './devicon-master/travis/travis-plain.svg';
@@ -113,6 +113,7 @@ export { default as vagrant } from './devicon-master/vagrant/vagrant-original.sv
 export { default as vim } from './devicon-master/vim/vim-original.svg';
 export { default as visualstudio } from './devicon-master/visualstudio/visualstudio-plain.svg';
 export { default as vmware } from './devicon-master/vmware/vmware-original.svg';
+export { default as vue } from './devicon-master/vue/vue-original.svg';
 export { default as vuejs } from './devicon-master/vuejs/vuejs-original.svg';
 export { default as webpack } from './devicon-master/webpack/webpack-original.svg';
 export { default as webstorm } from './devicon-master/webstorm/webstorm-original.svg';
