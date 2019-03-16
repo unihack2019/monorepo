@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Collapse, Button, IconButton, withStyles } from '@material-ui/core';
+import { Typography, Collapse, IconButton, withStyles } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import classnames from 'classnames';
 import ProfileAvatar from './ProfileAvatar';
@@ -64,13 +64,13 @@ class Profile extends Component {
             <Typography component="h1" variant="h3" gutterBottom>
               John Applicant
             </Typography>
-            <Typography component="p" variant="p" gutterBottom>
+            <Typography component="p" variant="body1" gutterBottom>
               erfanio
             </Typography>
-            <Typography component="p" variant="p" gutterBottom>
+            <Typography component="p" variant="body1" gutterBottom>
               dev@erfan.io
             </Typography>
-            <Typography component="p" variant="p">
+            <Typography component="p" variant="body1">
               I program... When I'm not programming I'm sleeping. When I'm not sleeping I'm programming. See how this works? :D
             </Typography>
           </div>
@@ -79,27 +79,35 @@ class Profile extends Component {
           <Typography component="h2" variant="h5" gutterBottom>
             Technologies
           </Typography>
-          <Collapse collapsedHeight="140px" in={showTech}>
+          <Collapse collapsedHeight="150px" in={showTech}>
             <div className={classes.horizontalContainer}>
               <TechCard
                 className={classes.techCard}
                 name="Java"
                 icon={icon('java')}
+                repos="3"
+                points="383"
+              />
+              <TechCard
+                className={classes.techCard}
+                name="Python"
+                icon={icon('python')}
+                repos="12"
+                points="7893"
               />
               <TechCard
                 className={classes.techCard}
                 name="Java"
                 icon={icon('java')}
+                repos="3"
+                points="383"
               />
               <TechCard
                 className={classes.techCard}
                 name="Java"
                 icon={icon('java')}
-              />
-              <TechCard
-                className={classes.techCard}
-                name="Java"
-                icon={icon('java')}
+                repos="3"
+                points="383"
               />
             </div>
             <div className={classes.horizontalContainer}>
@@ -107,21 +115,29 @@ class Profile extends Component {
                 className={classes.techCard}
                 name="Java"
                 icon={icon('java')}
+                repos="3"
+                points="383"
               />
               <TechCard
                 className={classes.techCard}
                 name="Java"
                 icon={icon('java')}
+                repos="3"
+                points="383"
               />
               <TechCard
                 className={classes.techCard}
                 name="Java"
                 icon={icon('java')}
+                repos="3"
+                points="383"
               />
               <TechCard
                 className={classes.techCard}
                 name="Java"
                 icon={icon('java')}
+                repos="3"
+                points="383"
               />
             </div>
           </Collapse>

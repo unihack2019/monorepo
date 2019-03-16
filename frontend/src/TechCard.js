@@ -1,21 +1,22 @@
 import React from 'react';
-import { Avatar, Card, CardHeader, CardContent, withStyles } from '@material-ui/core';
+import { Avatar, Card, CardHeader, CardContent, Typography, withStyles } from '@material-ui/core';
 
 const styles = {
-  p: {
-    margin: 0,
-  },
   content: {
     paddingTop: 0,
   },
 };
 
-const TechCard = ({ classes, className, icon }) => (
+const TechCard = ({ classes, className, name, icon, repos, points }) => (
   <Card className={className}>
-    <CardHeader title="Java" avatar={<Avatar src={icon}></Avatar>} />
+    <CardHeader title={name} avatar={<Avatar src={icon}></Avatar>} />
     <CardContent className={classes.content}>
-      <p className={classes.p}>3 Repos</p>
-      <p className={classes.p}>234 IntelliPoints</p>
+      <Typography component="p" variant="body1" gutterBottom>
+        {repos} Repos
+      </Typography>
+      <Typography component="p" variant="body1">
+        {points} IntelliPoints
+      </Typography>
     </CardContent>
   </Card>
 );
