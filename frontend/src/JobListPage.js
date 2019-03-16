@@ -1,25 +1,36 @@
 import React from 'react';
-import { Typography, withStyles } from '@material-ui/core';
+import { Typography, Card, withStyles } from '@material-ui/core';
 import JobTechnology from './TechnologyChip';
+import CompanyDrawer from './CompanyDrawer';
 
-const JobItem = withStyles({
-  tech: {
+const styles = {
+  card: {
+    padding: '10px',
+    marginBottom: '20px',
+  },
+  techList: {
     display: 'flex',
   },
-})(({ job, classes }) => (
-  <section>
-    <Typography variant="h1" component="h1">
+  tech: {
+    marginRight: '10px',
+  }
+};
+const JobItem = ({ job, classes }) => (
+  <Card className={classes.card}>
+    <Typography variant="headline" component="h3">
       {job.title}
     </Typography>
-    <Typography variant="p" component="p" />
-    <p>{job.description}</p>
-    <div className={classes.tech}>
+    <Typography variant="body1" component="p" gutterBottom>
+      {job.description}
+    </Typography>
+    <div className={classes.techList}>
       {job.technologies.map(technology => (
-        <JobTechnology technology={technology} />
+        <JobTechnology technology={technology} className={classes.tech} />
       ))}
     </div>
-  </section>
-));
+  </Card>
+);
+const StyledJobItem = withStyles(styles)(JobItem);
 
 const jobs = [
   {
@@ -27,7 +38,7 @@ const jobs = [
     description: 'Swek',
     technologies: [
       {
-        name: 'Freaking awesome pants swekness lol',
+        name: 'Freaking',
       },
       {
         name: 'Rawr',
@@ -51,12 +62,23 @@ const jobs = [
   },
 ];
 
-const JobListPage = () => (
-  <div>
-    {jobs.map(job => (
-      <JobItem job={job} />
-    ))}
-  </div>
+const pageStyles = {
+  container: {
+    padding: '20px',
+    maxWidth: '500px',
+    margin: 'auto',
+  }
+}
+const JobListPage = ({ classes }) => (
+  <>
+    <CompanyDrawer />
+    <div className={classes.container}>
+      <Typography component="h1" variant="h4" gutterBottom>
+        Your Job Listings
+      </Typography>
+      {jobs.map(job => <StyledJobItem job={job} />)}
+    </div>
+  </>
 );
 
-export default JobListPage;
+export default withStyles(pageStyles)(JobListPage);

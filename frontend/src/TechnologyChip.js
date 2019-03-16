@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles, Chip, Avatar } from '@material-ui/core';
+import classnames from 'classnames';
 import icon from './icon';
 
 const TechnologyChip = withStyles(
@@ -10,11 +11,11 @@ const TechnologyChip = withStyles(
     },
   }),
   { withTheme: true },
-)(({ technology, classes, avatar }) => (
+)(({ className, technology, classes, avatar }) => (
   <Chip
     avatar={<Avatar alt={technology.name} src={icon(technology.name)} className={classes.avatar} {...avatar} />}
     label={technology.name}
-    className={classes.chip}
+    className={classnames(classes.chip, className)}
   />
 ));
 export default TechnologyChip;
