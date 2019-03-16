@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { JobListPage } from './JobListPage';
 import logo from './logo.svg';
 import './App.css';
 
@@ -20,6 +21,7 @@ class App extends Component {
             Learn React
           </a>
         </header>
+        <JobListPage/>
       </div>
     );
   }
