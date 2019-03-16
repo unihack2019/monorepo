@@ -5,6 +5,7 @@ import ProfileAvatar from './ProfileAvatar';
 import matchToDisplayName from './matchToDisplayName';
 import { Route } from 'react-router';
 import { observer } from 'mobx-react';
+import { toJS } from 'mobx';
 import store from './store';
 
 // Mmmm slow code :P
@@ -56,28 +57,33 @@ const CandidateItem = withStyles(
     },
   }),
   { withTheme: true },
-)(({ classes, applicant }) => (
-  <Route
-    render={route => (
-      <Card
-        className={classes.container}
-        onClick={() => route.history.push(`${route.match.url}/profiles/${route.match.params.jobId}`)}
-      >
-        <div className={classes.avatarContainer}>
-          <ProfileAvatar size={64} match={'verystrong'} src={applicant.profile.avatar_url} />
-          <Typography variant="subtitle2">{matchToDisplayName('verystrong')}</Typography>
-        </div>
-        <div>
-          <Typography variant="h6" component="h1">
-            {applicant.profile.name}
-          </Typography>
-          <Typography variant="body1">{applicant.profile.bio}</Typography>
-          <TechnologiesChipList technologies={applicant.technologies} />
-        </div>
-      </Card>
-    )}
-  />
-));
+)(({ classes, applicant, job }) => {
+  const relevant = store.technologiesRelevant(applicant, job);
+  toJS(relevant).forEach(console.log);
+  console.log('RAWR ' + applicant.profile.name, store.technologyScore(relevant));
+  return (
+    <Route
+      render={route => (
+        <Card
+          className={classes.container}
+          onClick={() => route.history.push(`${route.match.url}/profiles/${route.match.params.jobId}`)}
+        >
+          <div className={classes.avatarContainer}>
+            <ProfileAvatar size={64} match={'verystrong'} src={applicant.profile.avatar_url} />
+            <Typography variant="subtitle2">{matchToDisplayName('verystrong')}</Typography>
+          </div>
+          <div>
+            <Typography variant="h6" component="h1">
+              {applicant.profile.name}
+            </Typography>
+            <Typography variant="body1">{applicant.profile.bio}</Typography>
+            <TechnologiesChipList technologies={relevant} />
+          </div>
+        </Card>
+      )}
+    />
+  );
+});
 
 class Delayed extends React.Component {
   state = { children: null };
@@ -121,12 +127,12 @@ const CandidateList = withStyles(
   }),
   { withTheme: true },
 )(
-  observer(({ classes }) => (
+  observer(({ classes, job }) => (
     <section className={classes.list}>
       {Object.keys(store.applicants)
         .map(key => [key, store.applicants[key]])
         .map(([key, applicant], index) => (
-          <CandidateItem key={key} applicant={applicant} y />
+          <CandidateItem key={key} job={job} applicant={applicant} y />
         ))}
     </section>
   )),
@@ -153,40 +159,11 @@ const JobListing = withStyles(
     <div>
       <Subheading>Description</Subheading>
       <Typography variant="body1" gutterBottom>
-        {job.description}
+        <span dangerouslySetInnerHTML={{ __html: job.description }} />
       </Typography>
     </div>
   </section>
 ));
-
-const job = {
-  title: 'Job title',
-  description:
-    'Description here aewrpoakwerpo awkrpoewak rpoawkerpewkr poawekrpo ewakr powekrp aewkr \n awpeoroaewpro kaewporwk \n\naopwekraperkaweoprk',
-  technologies: [
-    {
-      name: 'typescript',
-    },
-    {
-      name: 'react',
-    },
-    {
-      name: 'express',
-    },
-    {
-      name: 'TensorFlow',
-    },
-    {
-      name: 'Go',
-    },
-    {
-      name: 'Java',
-    },
-    {
-      name: 'JavaScript',
-    },
-  ],
-};
 
 const JobViewerPageStyled = withStyles(theme => {
   const pagePaddingUnit = theme.spacing.unit * 6;
@@ -217,23 +194,28 @@ const JobViewerPageStyled = withStyles(theme => {
       overflow: 'visible',
     },
   };
-})((
-  { classes }, //TODO: ({ job }) => (
-) => (
-  <section className={classes.page}>
-    <Typography variant="h3" className={classes.title} gutterBottom>
-      {job.title}
-    </Typography>
-    <div className={classes.content}>
-      <main className={classes.main}>
-        <JobListing job={job} />
-      </main>
-      <div className={classes.gap} />
-      <aside className={classes.aside}>
-        <Subheading>Description</Subheading>
-        <CandidateList />
-      </aside>
-    </div>
-  </section>
-));
+})(
+  observer((
+    { classes, match }, //TODO: ({ job }) => (
+  ) => {
+    const job = store.jobs[match.params.jobId];
+    return job ? (
+      <section className={classes.page}>
+        <Typography variant="h3" className={classes.title} gutterBottom>
+          {job.title}
+        </Typography>
+        <div className={classes.content}>
+          <main className={classes.main}>
+            <JobListing job={job} />
+          </main>
+          <div className={classes.gap} />
+          <aside className={classes.aside}>
+            <Subheading>Description</Subheading>
+            <CandidateList job={job} />
+          </aside>
+        </div>
+      </section>
+    ) : null;
+  }),
+);
 export default JobViewerPageStyled;
