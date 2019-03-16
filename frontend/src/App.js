@@ -17,8 +17,8 @@ class App extends Component {
           <Route path="/" exact component={Home} />
           <Route path="/github" component={Github} />
           <Route path="/jobs" exact component={JobListPage} />
-          <Route path="/jobs/:jobId" exact component={Profile} />
-          <Route path="/jobs/:jobId/profiles/:githubId" exact component={JobViewerPage} />
+          <Route path="/jobs/:jobId" exact component={JobViewerPage} />
+          <Route path="/jobs/:jobId/profiles/:githubId" exact component={Profile} />
           <Route component={ErrorPage} />
         </Switch>
       </Router>

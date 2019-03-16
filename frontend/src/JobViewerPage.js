@@ -27,19 +27,21 @@ const CandidateItem = withStyles(
       marginRight: theme.spacing.unit * 2
     },
   }), { withTheme: true })(({ classes, profile }) => (
-  <Route render={(route) => (
-    <Card className={classes.container} onClick={() => route.history.push('/profile')}>
-      <div className={classes.avatarContainer}>
-        <ProfileAvatar size={64} match={profile.match}/>
-        <Typography variant="subtitle2">{matchToDisplayName(profile.match)}</Typography>
-      </div>
-      <div>
-        <Typography variant="h6" component="h1">{profile.name}</Typography>
-        <TechnologiesChipList technologies={profile.technologies.slice(0, 3)}/>
-        <Typography variant="body1">{profile.bio}</Typography>
-      </div>
-    </Card>
-  )}
+  <Route 
+    render={(route) => (
+      <Card className={classes.container} onClick={() => route.history.push(`${route.match.path}/profiles/${route.match.params.jobId}`)}>
+        <div className={classes.avatarContainer}>
+          <ProfileAvatar size={64} match={profile.match}/>
+          <Typography variant="subtitle2">{matchToDisplayName(profile.match)}</Typography>
+        </div>
+        <div>
+          <Typography variant="h6" component="h1">{profile.name}</Typography>
+          <TechnologiesChipList technologies={profile.technologies.slice(0, 3)}/>
+          <Typography variant="body1">{profile.bio}</Typography>
+        </div>
+      </Card>
+    )}
+  />
 ));
 
 const CandidateList = withStyles(theme => ({
