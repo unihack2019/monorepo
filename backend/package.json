@@ -3,6 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node ./src/index.js",
- },
+    "start": "node ./src/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "node-fetch": "^2.3.0"
+  },
+  "devDependencies": {
+    "dotenv": "^7.0.0"
+  }
 }
