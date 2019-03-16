@@ -22,10 +22,10 @@ async function createTheFile() {
     const original = join(path, originalIcon(folderName));
     const plain = join(path, plainIcon(folderName));
     
-    if (await exists(plain)) {
-      code += exportStatement(folderName, plain);
-    } else if (await exists(original)) {
+    if (await exists(original)) {
       code += exportStatement(folderName, original);
+    } else if (await exists(plain)) {
+      code += exportStatement(folderName, plain);
     }
   }  
   /*
