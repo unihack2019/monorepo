@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles, Chip, Avatar } from '@material-ui/core';
+import classnames from 'classnames';
 import icon from './icon';
 
 const TechnologyChip = withStyles(
@@ -10,7 +11,7 @@ const TechnologyChip = withStyles(
     },
   }),
   { withTheme: true },
-)(({ technology, classes, avatar }) => {
+)(({ technology, classes, avatar, className }) => {
   const theIcon = icon(technology.name);
   return (
     <Chip
@@ -24,7 +25,7 @@ const TechnologyChip = withStyles(
         )
       }
       label={technology.name}
-      className={classes.chip}
+      className={classnames(classes.chip, className)}
     />
   );
 });
