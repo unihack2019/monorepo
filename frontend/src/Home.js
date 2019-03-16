@@ -1,21 +1,50 @@
 import React, { Component } from 'react';
-import { Button } from '@material-ui/core';
+import { Typography, withStyles } from '@material-ui/core';
 
-export default class Home extends Component {
+const styles = {
+  hero: {
+    height: '400px',
+    background: 'linear-gradient(rgba(0, 119, 181, 0.3), rgba(0, 119, 181, 0.3)), url(stock-image.jpg)',
+    backgroundSize: 'cover',
+    display: 'flex',
+    flexFlow: 'row',
+    alignItems: 'center',
+  },
+  heroText: {
+    flex: '1 1 auto',
+    textAlign: 'center',
+  },
+  h: {
+    color: '#fff',
+    fontWeight: 700,
+  },
+  container: {
+    maxWidth: '900px',
+  },
+};
+
+class Home extends Component {
   render() {
-    // const clientId = '43fd6cb45d67a0b47ef4';
-    const redirectUrl = `${process.env.REACT_APP_FRONTEND_URL}/github`;
-    const scope = 'repo';
+    const { classes } = this.props;
+
     return (
-      <div>
-        <Button
-          href={`https://github.com/login/oauth/authorize?client_id=${
-            process.env.REACT_APP_CLIENT_ID
-          }&redirect_uri=${redirectUrl}&scope=${scope}`}
-        >
-          Authorize Github
-        </Button>
-      </div>
+      <>
+        <div className={classes.hero}>
+          <div class={classes.heroText}>
+            <Typography component="h1" variant="h2" gutterBottom className={classes.h}>
+              Hire Me
+            </Typography>
+            <Typography component="h2" variant="h6" gutterBottom className={classes.h}>
+              The smart way to vet technical candidates
+            </Typography>
+          </div>
+        </div>
+        <div className={classes.container}>
+          Blah blah
+        </div>
+      </>
     );
   }
 }
+
+export default withStyles(styles)(Home);
