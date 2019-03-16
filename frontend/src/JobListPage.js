@@ -1,7 +1,8 @@
 import React from 'react';
+import { Chip } from '@material-ui/core';
 
 const JobTechnology = ({ technology }) => (
-  <div>{technology.name}</div>
+  <Chip label={technology.name}/>
 );
 
 const JobItem = ({ job }) => (
