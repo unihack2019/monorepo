@@ -4,35 +4,13 @@ import TechnologiesChipList from './TechnologiesChipList';
 import ProfileAvatar from './ProfileAvatar';
 import matchToDisplayName from './matchToDisplayName';
 import { Route } from 'react-router';
-import db from './api/firebase';
 import { observer } from 'mobx-react';
-import { observable, decorate, action, autorun } from 'mobx';
+import store from './store';
 
 // Mmmm slow code :P
 function match() {}
 
 const TIMEOUT = 750;
-class Store {
-  applicants = {};
-}
-decorate(Store, {
-  applicants: observable,
-});
-const store = new Store();
-
-autorun(() => {
-  console.log('Rawr', store.applicants);
-});
-
-db.collection('applicants').onSnapshot(snapshot => {
-  snapshot.forEach(
-    action(doc => {
-      const data = doc.data();
-      console.log(data);
-      store.applicants[doc.id] = data;
-    }),
-  );
-});
 
 class SlideFade extends React.Component {
   state = { in: false };
