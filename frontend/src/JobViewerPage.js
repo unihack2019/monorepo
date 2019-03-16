@@ -5,7 +5,6 @@ import ProfileAvatar from './ProfileAvatar';
 import matchToDisplayName from './matchToDisplayName';
 import { Route, Switch } from 'react-router';
 import { observer } from 'mobx-react';
-import { toJS } from 'mobx';
 import store from './store';
 import joinUrl from './joinUrl';
 import Profile from './Profile';
@@ -74,7 +73,10 @@ const CandidateItem = withStyles(
       render={route => (
         <Card
           className={classes.container}
-          onClick={() => route.history.push(`/jobs/${route.match.params.jobId}/profiles/${applicantId}`)}
+          onClick={() => {
+            console.log(`/jobs/${route.match.params.jobId}/profiles/${applicantId}`);
+            route.history.push(`/jobs/${route.match.params.jobId}/profiles/${applicantId}`);
+          }}
         >
           <div className={classes.avatarContainer}>
             <ProfileAvatar size={64} match={match} src={applicant.profile.avatar_url} />
