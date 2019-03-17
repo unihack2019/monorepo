@@ -1,6 +1,29 @@
 import React, { Component } from 'react';
+import { Button, Card, withStyles } from '@material-ui/core';
+import icon from '../icon';
 
-export default class Github extends Component {
+const styles = {
+  container: {
+    display: 'flex',
+    flexFlow: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    justifyItems: 'center',
+  },
+  logo: {
+    maxWidth: '200px',
+    padding: '20px 50px',
+    margin: 'auto',
+    display: 'block',
+  },
+  text: {
+    maxWidth: '400px',
+  },
+  card: {
+    padding: '20px',
+  }
+};
+class Github extends Component {
   async componentDidMount() {
     const search = this.props.location.search;
     const searchParams = new URLSearchParams(search);
@@ -18,6 +41,7 @@ export default class Github extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <div className={classes.container}>
         <Card className={classes.card}>
@@ -28,3 +52,4 @@ export default class Github extends Component {
     );
   }
 }
+export default withStyles(styles)(Github);
