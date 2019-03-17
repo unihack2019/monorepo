@@ -19,7 +19,7 @@ class App extends Component {
           <Route path="/github" component={Github} />
           <Route path="/jobs" exact component={JobListPage} />
           <Route path="/jobs/:jobId" component={JobViewerPage} />
-          <Route path="/githuba" component={GithubAuth} />
+          <Route path="/github_auth" component={GithubAuth} />
           <Route component={ErrorPage} />
         </Switch>
       </Router>
