@@ -8,7 +8,9 @@ import ProfileAvatar from './ProfileAvatar';
 import TechCard from './TechCard';
 import RepoCard from './RepoCard';
 import store from './store';
-
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import LinkIcon from '@material-ui/icons/Link';
+import scoreToMatch from './scoreToMatch';
 const styles = {
   verticalContainer: {
     display: 'flex',
@@ -23,7 +25,7 @@ const styles = {
     flex: '0 1 150',
     display: 'flex',
     flexFlow: 'column nowrap',
-    paddingRight: '50px',
+    paddingRight: '20px',
   },
   secondCol: {
     flex: '1 1 auto',
@@ -33,10 +35,23 @@ const styles = {
   },
   displayHeader: {
     display: 'flex',
+    marginBottom: '10px',
   },
   techCard: {
     flex: '1 0 auto',
   },
+  iconText: {
+    '& > p': {
+      marginLeft: '5px',
+    },
+    '& > a': {
+      marginLeft: '5px',
+    },
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '0.35em',
+  },
+
   expand: {
     margin: 'auto',
     transform: 'rotate(0deg)',
@@ -64,22 +79,34 @@ const Profile = observer(({ match, classes }) => {
     <div className={classnames(classes.container, classes.verticalContainer)}>
       <div className={classes.displayHeader}>
         <div className={classes.firstCol}>
-          <ProfileAvatar match="verystrong" />
+          <ProfileAvatar
+            src={applicant.profile.avatar_url}
+            match={scoreToMatch(store.technologyScore(store.technologiesRelevant(applicant, job)))}
+          />
         </div>
         <div className={classes.secondCol}>
           <Typography component="h1" variant="h3" gutterBottom>
-            John Applicant
+            {applicant.profile.name}
           </Typography>
-          <Typography component="p" variant="body1" gutterBottom>
-            erfanio
-          </Typography>
-          <Typography component="p" variant="body1" gutterBottom>
-            dev@erfan.io
-          </Typography>
-          <Typography component="p" variant="body1">
-            I program... When I'm not programming I'm sleeping. When I'm not sleeping I'm programming. See how this
-            works? :D
-          </Typography>
+          {applicant.profile.location ? (
+            <div className={classes.iconText}>
+              <LocationOnIcon fontSize="small" />
+              <Typography variant="body1">{applicant.profile.location}</Typography>
+            </div>
+          ) : null}
+          {applicant.profile.blog ? (
+            <div className={classes.iconText}>
+              <LinkIcon fontSize="small" />
+              <Typography component="a" variant="body1" href={applicant.profile.blog} target="_blank">
+                {applicant.profile.blog}
+              </Typography>
+            </div>
+          ) : null}
+          {applicant.profile.bio ? (
+            <Typography variant="body1" gutterBottom>
+              {applicant.profile.bio}
+            </Typography>
+          ) : null}
         </div>
       </div>
       <div className={classes.verticalContainer}>
