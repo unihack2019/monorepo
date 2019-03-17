@@ -100,7 +100,7 @@ const CandidateItem = withStyles(
     },
     chipList: {
       marginTop: '10px',
-    }
+    },
   }),
   { withTheme: true },
 )(({ classes, applicant, applicantId, match, relevant }) => {
@@ -116,7 +116,7 @@ const CandidateItem = withStyles(
         >
           <div className={classes.avatarContainer}>
             <ProfileAvatar size={64} match={match} src={applicant.profile.avatar_url} />
-            <Typography variant="subtitle2" style={{color: matchColor(match)}} className={classes.match}>
+            <Typography variant="subtitle2" style={{ color: matchColor(match) }} className={classes.match}>
               {matchToDisplayName(match)}
             </Typography>
           </div>
@@ -133,11 +133,15 @@ const CandidateItem = withStyles(
             {applicant.profile.blog ? (
               <div className={classes.iconText}>
                 <LinkIcon fontSize="small" />
-                <Typography component="a" variant="body1" href={applicant.profile.blog} target="_blank">{applicant.profile.blog}</Typography>
+                <Typography component="a" variant="body1" href={applicant.profile.blog} target="_blank">
+                  {applicant.profile.blog}
+                </Typography>
               </div>
             ) : null}
             {applicant.profile.bio ? (
-              <Typography variant="body1" gutterBottom>{applicant.profile.bio}</Typography>
+              <Typography variant="body1" gutterBottom>
+                {applicant.profile.bio}
+              </Typography>
             ) : null}
             <TechnologiesChipList technologies={relevant} className={classes.chipList} />
           </div>
@@ -150,8 +154,6 @@ const CandidateItem = withStyles(
 class Delayed extends React.Component {
   state = { children: null };
   componentDidMount() {
-    // BEST CODE
-    window.scrollTo(0, 0);
     this.setState({
       timeout: setTimeout(() => {
         this.setState({ timeout: null, children: this.props.children });
@@ -245,6 +247,13 @@ const JobListing = withStyles(
   </section>
 ));
 
+class BestCode extends React.Component {
+  componentDidMount() {
+    // BEST CODE
+    window.scrollTo(0, 0);
+  }
+}
+
 const JobViewerPageStyled = withStyles(theme => {
   const pagePaddingUnit = theme.spacing.unit * 6;
   return {
@@ -281,19 +290,26 @@ const JobViewerPageStyled = withStyles(theme => {
     const job = store.jobs[match.params.jobId];
     return job ? (
       <section className={classes.page}>
-        <Typography variant="h3" className={classes.title} gutterBottom>
-          {job.title}
-        </Typography>
+        <BestCode />
         <div className={classes.content}>
           <main className={classes.main}>
+            <Typography variant="h3" className={classes.title} gutterBottom>
+              {job.title}
+            </Typography>
             <JobListing job={job} />
           </main>
           <div className={classes.gap} />
           <aside className={classes.aside}>
-            <Subheading>Description</Subheading>
             <Switch>
-              <Route path={joinUrl(match.url, '/profiles/:githubId')} exact component={Profile} />
-              <Route render={() => <CandidateList job={job} />} />
+              <Route path={'/jobs/:jobId/profiles/:githubId'} exact component={Profile} />
+              <Route
+                render={() => (
+                  <>
+                    <Subheading>Description</Subheading>
+                    <CandidateList job={job} />
+                  </>
+                )}
+              />
             </Switch>
           </aside>
         </div>

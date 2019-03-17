@@ -19,6 +19,9 @@ class Store {
       divideSeries(technologies.length)
     );
   }
+  repositoriesByTechnology(technology, repositories) {
+    return repositories.filter(repository => repository.technologies.some(tech => technology.name === tech.name));
+  }
 }
 decorate(Store, {
   applicants: observable,

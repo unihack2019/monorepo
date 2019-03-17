@@ -1,5 +1,6 @@
 import React from 'react';
 import { Avatar, Card, CardHeader, CardContent, Typography, withStyles } from '@material-ui/core';
+import TechnologiesChipList from './TechnologiesChipList';
 
 const styles = {
   content: {
@@ -7,13 +8,11 @@ const styles = {
   },
 };
 
-const RepoCard = ({ classes, className, name }) => (
+const RepoCard = ({ classes, className, repository }) => (
   <Card className={className}>
-    <CardHeader title={name} />
+    <CardHeader title={repository.githubRepo.name} />
     <CardContent className={classes.content}>
-      <Typography component="p" variant="body1" gutterBottom>
-        Chips 🍟
-      </Typography>
+      <TechnologiesChipList technologies={repository.technologies.slice(0, 5)} />
     </CardContent>
   </Card>
 );
