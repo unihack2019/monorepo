@@ -10,19 +10,7 @@ import { observer } from 'mobx-react';
 import store from './store';
 import joinUrl from './joinUrl';
 import Profile from './Profile';
-
-function scoreToMatch(score) {
-  if (score <= 50000) {
-    return 'poor';
-  } else if (score <= 200000) {
-    return 'moderate';
-  } else if (score <= 1000000) {
-    return 'strong';
-  } else {
-    return 'verystrong';
-  }
-}
-
+import scoreToMatch from './scoreToMatch';
 function matchColor(match) {
   switch (match) {
     case 'poor':
@@ -251,6 +239,9 @@ class BestCode extends React.Component {
   componentDidMount() {
     // BEST CODE
     window.scrollTo(0, 0);
+  }
+  render() {
+    return null;
   }
 }
 

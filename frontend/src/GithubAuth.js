@@ -21,7 +21,7 @@ const styles = {
   },
   card: {
     padding: '20px',
-  }
+  },
 };
 const GithubAuth = ({ classes }) => {
   // const clientId = '43fd6cb45d67a0b47ef4';
@@ -31,7 +31,10 @@ const GithubAuth = ({ classes }) => {
     <div className={classes.container}>
       <Card className={classes.card}>
         <img src={icon('github')} className={classes.logo} />
-        <p className={classes.text}>We need access to your Github account to determine what languages and technologies you have most experience with. Please grant us access to your repositories for our scan to work properly!</p>
+        <p className={classes.text}>
+          We need access to your Github account to determine what languages and technologies you have most experience
+          with. Please grant us access to your repositories for our scan to work properly!
+        </p>
         <Button
           href={`https://github.com/login/oauth/authorize?client_id=${
             process.env.REACT_APP_CLIENT_ID
