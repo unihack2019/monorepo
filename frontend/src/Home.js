@@ -9,10 +9,15 @@ const styles = {
     display: 'flex',
     flexFlow: 'row',
     alignItems: 'center',
+    position: 'relative',
   },
   heroText: {
     flex: '1 1 auto',
     textAlign: 'center',
+  },
+  logo: {
+    width: '250px',
+    height: 'auto',
   },
   h: {
     color: '#fff',
@@ -31,9 +36,7 @@ class Home extends Component {
       <>
         <div className={classes.hero}>
           <div class={classes.heroText}>
-            <Typography component="h1" variant="h2" gutterBottom className={classes.h}>
-              Hire Me
-            </Typography>
+            <img src="/logo.png" className={classes.logo} />
             <Typography component="h2" variant="h6" gutterBottom className={classes.h}>
               The smart way to vet technical candidates
             </Typography>
