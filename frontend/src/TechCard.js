@@ -16,7 +16,7 @@ const TechCard = ({ classes, className, technology, applicant, index }) => (
         {store.repositoriesByTechnology(technology, applicant.repositories).length} Repos
       </Typography>
       <Typography component="p" variant="body1">
-        {technology.score / (index + 1)} IntelliPoints
+        {Math.round(technology.score / (index + 1))} IntelliPoints
       </Typography>
     </CardContent>
   </Card>
